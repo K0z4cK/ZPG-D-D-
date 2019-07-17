@@ -48,14 +48,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\EFContext.cs" />
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Inventory.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\UserItem.cs" />
-    <Compile Include="Entities\Skills.cs" />
-    <Compile Include="Entities\Stats.cs" />
+    <Compile Include="Entities\CharacterItem.cs" />
+    <Compile Include="Entities\CharacterSkills.cs" />
+    <Compile Include="Entities\CharacterStats.cs" />
+    <Compile Include="Migrations\201907171949375_EntitMig1.cs" />
+    <Compile Include="Migrations\201907171949375_EntitMig1.Designer.cs">
+      <DependentUpon>201907171949375_EntitMig1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907172019380_EntitMig2.cs" />
+    <Compile Include="Migrations\201907172019380_EntitMig2.Designer.cs">
+      <DependentUpon>201907172019380_EntitMig2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +74,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Consts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201907171949375_EntitMig1.resx">
+      <DependentUpon>201907171949375_EntitMig1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907172019380_EntitMig2.resx">
+      <DependentUpon>201907172019380_EntitMig2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
+    [Table("tbl_Items")]
     public class Item
     {
         [Key]
@@ -16,6 +18,6 @@ namespace DAL.Entities
 
         public string Description { get; set; }
 
-        public virtual ICollection<UserItem> UserItems { get; set; }
+        public virtual ICollection<CharacterItem> CharacterItems { get; set; }
     }
 }

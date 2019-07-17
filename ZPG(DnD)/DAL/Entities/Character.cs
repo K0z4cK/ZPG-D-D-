@@ -8,13 +8,11 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    [Table("tblCharacters")]
+    [Table("tbl_Characters")]
     public class Character
     {
         [Key]
         public int Id { get; set; }
-
-
 
         [ForeignKey("UserOf")]
         public int UserId { get; set; }

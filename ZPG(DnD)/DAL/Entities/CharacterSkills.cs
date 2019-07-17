@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    [Table("tbl_Skills")]
-    public class UserSkills
+    [Table("tbl_CharacterSkills")]
+    public class CharacterSkills
     {
         [Key]
+        [ForeignKey("CharacterOf")]
         public int Id { get; set; }
+        public virtual Character CharacterOf { get; set; }
+
         public int Acrobatics { get; set; }
         public int AnimalHandling { get; set; }
         public int Arcana { get; set; }

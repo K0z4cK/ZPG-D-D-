@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    public class UserItem
+    [Table("tbl_CharacterItems")]
+    public class CharacterItem
     {
         [Key]
         public int Id { get; set; }
