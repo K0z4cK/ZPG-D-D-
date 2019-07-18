@@ -53,6 +53,7 @@
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Inventory.cs" />
+    <Compile Include="Entities\Mob.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\CharacterItem.cs" />
     <Compile Include="Entities\CharacterSkills.cs" />
@@ -64,6 +65,10 @@
     <Compile Include="Migrations\201907172019380_EntitMig2.cs" />
     <Compile Include="Migrations\201907172019380_EntitMig2.Designer.cs">
       <DependentUpon>201907172019380_EntitMig2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907181155313_EntitMig3.cs" />
+    <Compile Include="Migrations\201907181155313_EntitMig3.Designer.cs">
+      <DependentUpon>201907181155313_EntitMig3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +86,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907172019380_EntitMig2.resx">
       <DependentUpon>201907172019380_EntitMig2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907181155313_EntitMig3.resx">
+      <DependentUpon>201907181155313_EntitMig3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

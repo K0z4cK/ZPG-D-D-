@@ -8,11 +8,11 @@ namespace DAL.Entities
 {
     public abstract class Entity
     {
-        public abstract string Name { get; set; }
-        public abstract int ArmorClass { get; set; }
-        public abstract int Intitiative { get; set; }
-        public abstract int Speed { get; set; }
-        public abstract int HPMax { get; set; }
+        public  string Name { get; set; }
+        public  int ArmorClass { get; set; }
+        public  int Intitiative { get; set; }
+        public  int Speed { get; set; }
+        public  int HPMax { get; set; }
 
     }
 }
