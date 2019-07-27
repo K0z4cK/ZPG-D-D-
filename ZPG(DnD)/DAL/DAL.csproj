@@ -48,12 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\EnemyInventory.cs" />
+    <Compile Include="Entities\EnemyItem.cs" />
     <Compile Include="Entities\EFContext.cs" />
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Entities\Inventory.cs" />
-    <Compile Include="Entities\Mob.cs" />
+    <Compile Include="Entities\CharacterInventory.cs" />
+    <Compile Include="Entities\Enemy.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\CharacterItem.cs" />
     <Compile Include="Entities\CharacterSkills.cs" />

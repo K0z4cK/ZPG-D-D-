@@ -8,17 +8,11 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    [Table("tbl_Items")]
-    public class Item
+    [Table("tbl_Characters")]
+    public class Enemy: Entity
     {
         [Key]
         public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        public virtual ICollection<CharacterItem> CharacterItems { get; set; }
-        public virtual ICollection<EnemyItem> EnemyItems { get; set; }
+        public int ExpGained { get; set; }
     }
 }

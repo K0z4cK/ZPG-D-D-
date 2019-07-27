@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    [Table("tbl_CharacterItems")]
-    public class CharacterItem
+    [Table("tbl_EnemyItems")]
+    public class EnemyItem
     {
         [Key]
         public int Id { get; set; }
@@ -19,7 +19,7 @@ namespace DAL.Entities
         [ForeignKey("InventoryOf")]
         public int InventoryId { get; set; }
 
-        public virtual CharacterInventory InventoryOf { get; set; }
+        public virtual EnemyInventory InventoryOf { get; set; }
 
         public virtual Item ItemOf { get; set; }
     }

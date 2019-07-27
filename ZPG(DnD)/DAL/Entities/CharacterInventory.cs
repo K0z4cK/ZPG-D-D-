@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DAL.Entities
 {
     [Table("tbl_Inventories")]
-    public class Inventory
+    public class CharacterInventory
     {
         [Key]
         [ForeignKey("CharacterOf")]

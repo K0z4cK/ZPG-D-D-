@@ -16,9 +16,12 @@ namespace DAL.Entities
 
         public DbSet<User> Users { get; set; }
         public DbSet<Character> Characters { get; set; }
+        public DbSet<Enemy> Enemy { get; set; }
         public DbSet<CharacterItem> CharacterItems { get; set; }
+        public DbSet<EnemyItem> EnemyItems { get; set; }
         public DbSet<Item> Items { get; set; }
-        public DbSet<Inventory> Inventories { get; set; }
+        public DbSet<CharacterInventory> CharInventories { get; set; }
+        public DbSet<EnemyInventory> EnemyInventories { get; set; }
         public DbSet<CharacterSkills> CharacterSkills { get; set; }
         public DbSet<CharacterStats> CharacterStats { get; set; }
     }
