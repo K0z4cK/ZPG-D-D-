@@ -12,10 +12,10 @@ namespace DAL.Entities
     public class EnemyInventory
     {
         [Key]
-        [ForeignKey("CharacterOf")]
+        [ForeignKey("EnemyOf")]
         public int Id { get; set; }
-        public virtual Enemy CharacterOf { get; set; }
+        public virtual Enemy EnemyOf { get; set; }
 
-        public virtual ICollection<EnemyItem> CharacterItems { get; set; }
+        public virtual ICollection<EnemyItem> EnemyItems { get; set; }
     }
 }

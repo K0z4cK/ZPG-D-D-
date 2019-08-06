@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    [Table("tbl_Characters")]
+    [Table("tbl_Enemies")]
     public class Enemy: Entity
     {
         [Key]
         public int Id { get; set; }
         public int ExpGained { get; set; }
+        public bool IsBoss { get; set; }
     }
 }

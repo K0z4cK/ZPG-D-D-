@@ -9,7 +9,7 @@ namespace DAL.Entities
     {
         [Key]
         public int Id { get; set; }
-
+        public string Name { get; set; }
         public virtual ICollection<Character> Characters {get;set;}
     }
 }

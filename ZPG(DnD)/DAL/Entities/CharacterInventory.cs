@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    [Table("tbl_Inventories")]
+    [Table("tbl_CharacterInventories")]
     public class CharacterInventory
     {
         [Key]

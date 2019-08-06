@@ -72,6 +72,18 @@
     <Compile Include="Migrations\201907181155313_EntitMig3.Designer.cs">
       <DependentUpon>201907181155313_EntitMig3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907271338207_EntitMig4.cs" />
+    <Compile Include="Migrations\201907271338207_EntitMig4.Designer.cs">
+      <DependentUpon>201907271338207_EntitMig4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907271353506_EntitMig5.cs" />
+    <Compile Include="Migrations\201907271353506_EntitMig5.Designer.cs">
+      <DependentUpon>201907271353506_EntitMig5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908061749106_EntitMig6.cs" />
+    <Compile Include="Migrations\201908061749106_EntitMig6.Designer.cs">
+      <DependentUpon>201908061749106_EntitMig6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -91,6 +103,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907181155313_EntitMig3.resx">
       <DependentUpon>201907181155313_EntitMig3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907271338207_EntitMig4.resx">
+      <DependentUpon>201907271338207_EntitMig4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907271353506_EntitMig5.resx">
+      <DependentUpon>201907271353506_EntitMig5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908061749106_EntitMig6.resx">
+      <DependentUpon>201908061749106_EntitMig6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
