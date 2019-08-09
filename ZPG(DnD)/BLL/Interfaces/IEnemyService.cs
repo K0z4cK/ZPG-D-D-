@@ -8,5 +8,7 @@ namespace BLL.Interfaces
 {
     public interface IEnemyService
     {
+        int Fight();
+        int Die();
     }
 }
