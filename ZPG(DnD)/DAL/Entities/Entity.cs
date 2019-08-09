@@ -13,7 +13,7 @@ namespace DAL.Entities
         public  int Intitiative { get; set; }
         public  int Speed { get; set; }
         public  int HPMax { get; set; }
-        
+        public int HP { get; set; }
 
     }
 }
