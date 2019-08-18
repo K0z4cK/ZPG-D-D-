@@ -49,7 +49,6 @@ namespace DAL.Repositories
             {
                 var user = _context.Users.FirstOrDefault(t => t.Id == id);
                 user.Login = elem.Login;
-                user.Email = elem.Email;
                 user.Password = elem.Password;
 
                 _context.SaveChanges();

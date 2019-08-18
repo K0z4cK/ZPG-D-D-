@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    class CharacterService : ICharacterService
+    public class CharacterService : ICharacterService
     {
         private readonly EFContext _context = new EFContext();
         private readonly IZPGRepository<Character> _repository;
@@ -19,22 +19,37 @@ namespace BLL.Services
         {
             _repository = new CharacterRepository(_context);
         }
+        public IEnumerable<CreateCharacterModel> GetCharactersByUserId(int userId)
+        {
+            return _repository.Get().
+                  Where(t => t.UserId == userId).
+                  Select(t => new CreateCharacterModel()
+                  {
+                      ArmorClass = t.ArmorClass,
+                      Name = t.Name,
+                      HP= t.HP,
+                      HPMax=t.HPMax,
+                      Intitiative=t.Intitiative,
+                      Speed = t.Speed
+                  }
+              );
+        }
         public bool CheckSituation()
         {
             throw new NotImplementedException();
         }
 
-        public bool Create(CreateCharacterModel character, int userId)
+        public int Create(CreateCharacterModel character, int userId)
         {
+            //string UserAnswer = 
             Random random = new Random();
-            Character newCharacter;
-            character.Name = "Gandalf";
+            character.Name = InputBox;
             character.HPMax = random.Next(150);
             character.HP = character.HPMax;
             character.Intitiative = random.Next(-6, 10);
             character.Speed = random.Next(50);
             character.ArmorClass = random.Next(40);
-            newCharacter = new Character()
+            return _repository.Add(new Character()
             {
                 Name = character.Name,
                 HPMax = character.HPMax,
@@ -43,9 +58,8 @@ namespace BLL.Services
                 Speed = character.Speed,
                 ArmorClass = character.ArmorClass,
                 UserId = userId
-                
-            };
-            return true;
+
+            });
         }
         public bool Die()
         {

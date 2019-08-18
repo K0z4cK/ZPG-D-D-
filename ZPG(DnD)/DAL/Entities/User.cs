@@ -13,10 +13,6 @@ namespace DAL.Entities
         [Required, StringLength(50), Index(IsUnique = true)]
         public string Login { get; set; }
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
         [Required, StringLength(30, MinimumLength = 4)]
         [DataType(DataType.Password)]
         public string Password { get; set; }

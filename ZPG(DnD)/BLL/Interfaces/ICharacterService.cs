@@ -9,7 +9,8 @@ namespace BLL.Interfaces
 {
     public interface ICharacterService
     {
-        bool Create(CreateCharacterModel);
+        IEnumerable<CreateCharacterModel> GetCharactersByUserId(int userId);
+        int Create(CreateCharacterModel character, int userId);
         bool Pick();
         bool Walk();
         bool Explore();

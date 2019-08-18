@@ -1,0 +1,27 @@
+﻿<Window x:Class="ZPG_DnD_.UserRegister"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZPG_DnD_"
+        mc:Ignorable="d"
+        Title="UserRegister" Height="369.986" Width="458.511">
+    <Grid Margin="0,0,2,-20">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel  Margin="63,40,63,108">
+            <TextBlock Text="User Name:"/>
+            <TextBox x:Name="UserName" Height="28"/>
+        </StackPanel>
+        <StackPanel  Margin="63,100,63,108">
+            <TextBlock Text="Password"/>
+            <PasswordBox x:Name="Password" Height="28"/>
+        </StackPanel>
+        <StackPanel Margin="63,149,63,108">
+            <TextBlock Text="Repeat Password"/>
+            <PasswordBox x:Name="RePassword" Height="28"/>
+        </StackPanel>
+        <Button Content="Register" Click="Button_Click" Margin="63,225,63,47"/>
+    </Grid>
+</Window>

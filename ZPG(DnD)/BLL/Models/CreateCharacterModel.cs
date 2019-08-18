@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Models
 {
-    class CreateCharacterModel
+    public class CreateCharacterModel
     {
         public string Name { get; set; }
         public int ArmorClass { get; set; }

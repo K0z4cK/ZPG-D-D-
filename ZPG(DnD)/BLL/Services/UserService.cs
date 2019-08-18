@@ -19,6 +19,11 @@ namespace BLL.Services
         {
             _repository = new UserRepository(_context);
         }
+        public User GetUser(int userId)
+        {
+            return _repository.Get().FirstOrDefault(
+               u => u.Id == userId );
+        }
         public int Login(UserLoginModel user)
         {
             int result = _repository.Get().FirstOrDefault(
@@ -32,7 +37,7 @@ namespace BLL.Services
             User newUser;
             if (user.Password == user.RePassword)
             {
-                newUser = new User() { Login = user.Login, Password = user.Password, Email = user.Mail };
+                newUser = new User() { Login = user.Login, Password = user.Password };
                 _repository.Add(newUser);
                 result = 1;
             }

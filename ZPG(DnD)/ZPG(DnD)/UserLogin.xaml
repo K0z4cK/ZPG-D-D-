@@ -1,0 +1,22 @@
+﻿<Window x:Class="ZPG_DnD_.UserLogin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZPG_DnD_"
+        mc:Ignorable="d"
+        Title="UserLogin" Height="470" Width="458.511">
+    <Grid Margin="0,0,2,-20">
+        <StackPanel Margin="50,46,49,332">
+            <TextBlock Text="Login:"/>
+            <TextBox x:Name="Login" Height="28"/>
+        </StackPanel>
+        <StackPanel Margin="51,93,49,292">
+            <TextBlock Text="Password"/>
+            <PasswordBox x:Name="Password" Height="27"/>
+        </StackPanel>
+        
+        <Button Click="Button_Log_Click" Content="Login" Margin="50,153,49,255"/>
+        <Button Click="Button_Reg_Click" Content="Register" Margin="50,205,49,203"/>
+    </Grid>
+</Window>
