@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ZPG_DnD_.Helping;
 
 namespace ZPG_DnD_
 {
@@ -44,19 +45,28 @@ namespace ZPG_DnD_
 
         private void Button_Pick_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindow;
+            if (lvCharacters.IsFocused)
+            {
+                mainWindow = new MainWindow(lvCharacters.SelectedItem)
+            }
+                
 
         }
 
         private void Button_Add_Click(object sender, RoutedEventArgs e)
         {
+            InputBox inputBox = new InputBox();
             int result = -1;
             CreateCharacterModel newCharacter = new CreateCharacterModel();
-            result = _characterService.Create(newCharacter, _idUser);
-            if (result < 0)
+            inputBox.ShowDialog();
+            if (inputBox.Text.Text == "")
                 MessageBox.Show("Error while add character");
             else
             {
-                lvCharacters.Items.Add(_repository.Get().First(u => u.Id == _idUser));
+                newCharacter.Name = inputBox.Text.Text;
+                result = _characterService.Create(newCharacter, _idUser);
+                lvCharacters.Items.Add(newCharacter);
             }
         }
     }

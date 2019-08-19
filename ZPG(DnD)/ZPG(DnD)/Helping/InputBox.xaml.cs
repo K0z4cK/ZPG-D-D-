@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BLL.Models;
+using BLL.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,12 +28,13 @@ namespace ZPG_DnD_.Helping
 
         private void Button_OK(object sender, RoutedEventArgs e)
         {
-
+            Close();
         }
 
         private void Button_Cancel(object sender, RoutedEventArgs e)
         {
-
+            Text.Text = null;
+            Close();
         }
     }
 }

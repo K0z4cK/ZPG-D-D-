@@ -41,9 +41,7 @@ namespace BLL.Services
 
         public int Create(CreateCharacterModel character, int userId)
         {
-            //string UserAnswer = 
             Random random = new Random();
-            character.Name = InputBox;
             character.HPMax = random.Next(150);
             character.HP = character.HPMax;
             character.Intitiative = random.Next(-6, 10);
