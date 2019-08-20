@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,10 @@ namespace BLL.Models
     public class CreateCharacterModel
     {
         public string Name { get; set; }
+        public Races Race { get; set; }
+        public Clases Clase { get; set; }
+        public Aligments Aligment { get; set; }
+        public Backgrounds Background { get; set; }
         public int ArmorClass { get; set; }
         public int Intitiative { get; set; }
         public int Speed { get; set; }

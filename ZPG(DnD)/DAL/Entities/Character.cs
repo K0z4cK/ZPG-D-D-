@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
+    
     [Table("tbl_Characters")]
     public class Character: Entity
     {
@@ -17,6 +18,10 @@ namespace DAL.Entities
         [ForeignKey("UserOf")]
         public int UserId { get; set; }
 
+        public Races Race { get; set; }
+        public Clases Clase { get; set; }
+        public Aligments Aligment { get; set; }
+        public Backgrounds Background { get; set; }
         public virtual User UserOf { get ; set; }
         }
 }
