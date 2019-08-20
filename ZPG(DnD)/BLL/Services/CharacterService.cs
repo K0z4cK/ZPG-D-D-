@@ -13,15 +13,19 @@ namespace BLL.Services
     public class CharacterService : ICharacterService
     {
         private readonly EFContext _context = new EFContext();
-        private readonly IZPGRepository<Character> _repository;
+        private readonly IZPGRepository<Character> _characterRepository;
+        private readonly IZPGRepository<CharacterSkills> _skillsRepository;
+        private readonly IZPGRepository<CharacterStats> _statsRepository;
 
         public CharacterService()
         {
-            _repository = new CharacterRepository(_context);
+            _characterRepository = new CharacterRepository(_context);
+            _skillsRepository = new CharacterSkillsRepository(_context);
+            _statsRepository = new CharacterStatsRepository(_context);
         }
         public IEnumerable<CreateCharacterModel> GetCharactersByUserId(int userId)
         {
-            return _repository.Get().
+            return _characterRepository.Get().
                   Where(t => t.UserId == userId).
                   Select(t => new CreateCharacterModel()
                   {
@@ -39,7 +43,7 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public int Create(CreateCharacterModel character, int userId)
+        public int Create(CreateCharacterModel character, CreateCharacterStats stats, CreateCharacterSkills skills, int userId)
         {
             Random random = new Random();
             character.HPMax = random.Next(150);
@@ -47,7 +51,25 @@ namespace BLL.Services
             character.Intitiative = random.Next(-6, 10);
             character.Speed = random.Next(50);
             character.ArmorClass = random.Next(40);
-            return _repository.Add(new Character()
+
+            stats.Charisma = random.Next(-4, 6);
+            stats.Constitution = random.Next(-4, 6);
+            stats.Dexterity = random.Next(-4, 6);
+            stats.Intelligence = random.Next(-4, 6);
+            stats.Strength = random.Next(-4, 6);
+            stats.Wisdom = random.Next(-4, 6);
+
+            skills.Acrobatics = random.Next(-2, 4);
+            skills.AnimalHandling = random.Next(-4, 6);
+            skills.Athletics = random.Next(-4, 6);
+            skills.Medicine = random.Next(-4, 6);
+            skills.Persuasion = random.Next(-4, 6);
+            skills.Religion = random.Next(-4, 6);
+            skills.SleightOfHand = random.Next(-4, 6);
+            skills.Stealth = random.Next(-4, 6);
+            skills.Survival = random.Next(-4, 6);
+
+            _characterRepository.Add(new Character()
             {
                 Name = character.Name,
                 HPMax = character.HPMax,
@@ -58,6 +80,35 @@ namespace BLL.Services
                 UserId = userId
 
             });
+
+            _skillsRepository.Add(new CharacterSkills()
+            {
+                Id = 1,//_characterRepository.Get().FirstOrDefault(
+                //u => u.Name == character.Name).Id,
+                Acrobatics = skills.Acrobatics,
+                AnimalHandling = skills.AnimalHandling,
+                Athletics = skills.Athletics,
+                Medicine = skills.Medicine,
+                Persuasion = skills.Persuasion,
+                Religion = skills.Religion,
+                SleightOfHand = skills.SleightOfHand,
+                Stealth = skills.Stealth,
+                Survival = skills.Survival
+            });
+            _statsRepository.Add(new CharacterStats()
+            {
+                Id = 1,//_characterRepository.Get().FirstOrDefault(
+                //u => u.Name == character.Name).Id,
+                Charisma = stats.Charisma,
+                Constitution = stats.Constitution,
+                Dexterity = stats.Dexterity,
+                Intelligence = stats.Intelligence,
+                Strength = stats.Strength,
+                Wisdom = stats.Wisdom
+            });
+
+            return _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id;
         }
         public bool Die()
         {

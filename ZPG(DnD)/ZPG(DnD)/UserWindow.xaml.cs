@@ -61,14 +61,27 @@ namespace ZPG_DnD_
             InputBox inputBox = new InputBox();
             int result = -1;
             CreateCharacterModel newCharacter = new CreateCharacterModel();
+            CreateCharacterStats newStats = new CreateCharacterStats();
+            CreateCharacterSkills newSkills = new CreateCharacterSkills();
             inputBox.ShowDialog();
             if (inputBox.Text.Text == "")
                 MessageBox.Show("Error while add character");
             else
             {
                 newCharacter.Name = inputBox.Text.Text;
-                result = _characterService.Create(newCharacter, _idUser);
+                result = _characterService.Create(newCharacter, newStats, newSkills, _idUser);
                 lvCharacters.Items.Add(newCharacter);
+            }
+        }
+
+        private void Button_Dell_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvCharacters.SelectedIndex >= 0)
+            {
+                CreateCharacterModel dell = (CreateCharacterModel)lvCharacters.SelectedItem;
+                lvCharacters.Items.Remove(lvCharacters.SelectedItem);
+                _repository.Delete(_repository.Get().FirstOrDefault(
+                u => u.Name == dell.Name).Id);
             }
         }
     }

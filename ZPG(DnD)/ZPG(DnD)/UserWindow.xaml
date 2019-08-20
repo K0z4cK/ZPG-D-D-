@@ -34,7 +34,8 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Click="Button_Pick_Click" Content="Pick Character" Grid.Row="3" Margin="50,0,50,0"/>
-        <Button Click="Button_Add_Click" Content="Add New Character" Grid.Row="3" Grid.Column="1" Margin="50,0,50,0"/>
+        <Button Click="Button_Pick_Click" Content="Pick Character" Grid.Row="3" Margin="10,16,101,16"/>
+        <Button Click="Button_Dell_Click" Content="Delete Character" Grid.Row="3" Grid.ColumnSpan="2" Margin="199,16,211,16"/>
+        <Button Click="Button_Add_Click" Content="Add New Character" Grid.Row="3" Grid.Column="1" Margin="103,16,10,16"/>
     </Grid>
 </Window>

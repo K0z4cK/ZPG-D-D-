@@ -15,7 +15,6 @@ namespace DAL.Entities
         [ForeignKey("CharacterOf")]
         public int Id { get; set; }
         public virtual Character CharacterOf { get; set; }
-
         public int Strength { get; set; }
         public int Dexterity { get; set; }
         public int Constitution { get; set; }
