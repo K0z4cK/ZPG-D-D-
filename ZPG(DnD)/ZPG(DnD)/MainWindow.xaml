@@ -36,21 +36,21 @@
             <RowDefinition Height="38*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" BorderThickness="2" BorderBrush="Black" Grid.RowSpan="2">
-            <TextBlock x:Name="characterName" Text="Name" FontSize="38" FontFamily="Wide Latin"  />
+            <TextBlock x:Name="characterName" Text="{Binding Name}" FontSize="38" FontFamily="Wide Latin"  />
         </Border>
         <TextBlock x:Name="classNlevel" Text="Name" FontSize="16" Grid.Column="7" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="4,0,0,0" Height="21" Grid.Row="1"/>
         <TextBlock Text="CLASS/LEVEL" FontSize="12" Grid.Row="3" Grid.Column="7" VerticalAlignment="Top" Margin="4,0,0,0" Height="16"/>
-        <TextBlock Text="Name" FontSize="16" Grid.Column="8" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21" Grid.Row="1"/>
-        <TextBlock x:Name="background" Text="BACKGROUND" FontSize="12" Grid.Row="3" Grid.Column="8" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
-        <TextBlock Text="Name" FontSize="16" Grid.Column="9" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21" Grid.Row="1"/>
-        <TextBlock x:Name="userName" Text="USER NAME" FontSize="12" Grid.Row="3" Grid.Column="9" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
+        <TextBlock x:Name="background" Text="Name" FontSize="16" Grid.Column="8" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21" Grid.Row="1"/>
+        <TextBlock Text="BACKGROUND" FontSize="12" Grid.Row="3" Grid.Column="8" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
+        <TextBlock x:Name="userName"  Text="Name" FontSize="16" Grid.Column="9" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21" Grid.Row="1"/>
+        <TextBlock Text="USER NAME" FontSize="12" Grid.Row="3" Grid.Column="9" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
 
-        <TextBlock Text="Name" FontSize="16" Grid.Column="7" Grid.Row="3" VerticalAlignment="Bottom" Margin="4,0,0,0" Height="21"/>
-        <TextBlock x:Name="race" Text="RACE" FontSize="12" Grid.Row="4" Grid.Column="7" VerticalAlignment="Top" Margin="4,0,0,0" Height="16"/>
-        <TextBlock Text="Name" FontSize="16" Grid.Column="8" Grid.Row="3" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21"/>
-        <TextBlock x:Name="Aligment" Text="ALIGMENT" FontSize="12" Grid.Row="4" Grid.Column="8" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
-        <TextBlock Text="Name" FontSize="16" Grid.Column="9" Grid.Row="3" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21"/>
-        <TextBlock x:Name="experiencePt" Text="EXPERIENCE POINTS" FontSize="12" Grid.Row="4" Grid.Column="9" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
+        <TextBlock x:Name="race" Text="Name" FontSize="16" Grid.Column="7" Grid.Row="3" VerticalAlignment="Bottom" Margin="4,0,0,0" Height="21"/>
+        <TextBlock Text="RACE" FontSize="12" Grid.Row="4" Grid.Column="7" VerticalAlignment="Top" Margin="4,0,0,0" Height="16"/>
+        <TextBlock x:Name="Aligment" Text="Name" FontSize="16" Grid.Column="8" Grid.Row="3" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21"/>
+        <TextBlock Text="ALIGMENT" FontSize="12" Grid.Row="4" Grid.Column="8" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
+        <TextBlock x:Name="experiencePt" Text="Name" FontSize="16" Grid.Column="9" Grid.Row="3" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21"/>
+        <TextBlock Text="EXPERIENCE POINTS" FontSize="12" Grid.Row="4" Grid.Column="9" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
 
         <TextBlock Grid.Column="1" Grid.Row="5" Text="STRENGTH" FontSize="14" HorizontalAlignment="Center" Margin="11,0,10,45" FontWeight="DemiBold" Width="70"/>
         <Border Grid.Column="1" Grid.Row="5" BorderThickness="1" BorderBrush="Black">
@@ -80,20 +80,20 @@
         <TextBlock Grid.Column="3" Grid.Row="5" Text="ARMOR" FontSize="14" HorizontalAlignment="Center" Margin="16,32,16,0" FontWeight="DemiBold" Width="51"/>
         <TextBlock Grid.Column="3" Grid.Row="5" Text="CLASS" FontSize="14" HorizontalAlignment="Center" Margin="21,44,21,0" FontWeight="DemiBold" Width="41"/>
         <Border Grid.Column="3" Grid.Row="5" BorderThickness="1" BorderBrush="Black" Height="66" VerticalAlignment="Top">
-            <TextBlock x:Name="armorClassNum" Text="Num" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="23,9,23,34"/>
+            <TextBlock x:Name="armorClassNum" Text="{Binding ArmorClass}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="23,9,23,34"/>
         </Border>
         <TextBlock Grid.Column="4" Grid.Row="5" Text="INTITIATIVE" FontSize="12" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Margin="5,40,5,10" Width="73" />
         <Border Grid.Column="4" Grid.Row="5" BorderThickness="1" BorderBrush="Black" Height="66" VerticalAlignment="Top">
-            <TextBlock x:Name="initiativeNum" Text="Num" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="23,9,23,34"/>
+            <TextBlock x:Name="initiativeNum" Text="{Binding Intitiative}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="23,9,23,34"/>
         </Border>
         <TextBlock Grid.Column="5" Grid.Row="5" Text="SPEED" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="64" Margin="9,38,9,0" />
         <Border Grid.Column="5" Grid.Row="5" BorderThickness="1" BorderBrush="Black" Height="66" VerticalAlignment="Top">
-            <TextBlock x:Name="speedNum" Text="Num" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="23,9,23,34"/>
+            <TextBlock x:Name="speedNum" Text="{Binding Speed}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="23,9,23,34"/>
         </Border>
 
         <TextBlock Grid.Column="4" Grid.Row="6" Text="HP" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="64" Margin="9,0,10,0"  />
         <Border Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="6" BorderThickness="1" BorderBrush="Black" Height="35" VerticalAlignment="Top" Margin="0,20,0,0">
-            <TextBlock x:Name="healthPoints" Text="Num/Num" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock x:Name="healthPoints" Text="{Binding HP}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Border>
 
         <TextBlock Grid.Column="7" Grid.Row="5" Text="Equipment" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="79" Margin="6,0,0,0"  />

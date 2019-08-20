@@ -58,6 +58,8 @@
     <Compile Include="Interfaces\IEnemyService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\CreateCharacterModel.cs" />
+    <Compile Include="Models\CreateCharacterSkills.cs" />
+    <Compile Include="Models\CreateCharacterStats.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserRegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

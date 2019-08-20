@@ -24,6 +24,7 @@ namespace ZPG_DnD_
         public MainWindow(CreateCharacterModel character)
         {
             InitializeComponent();
+            this.DataContext = character;
         }
     }
 }

@@ -46,9 +46,11 @@ namespace ZPG_DnD_
         private void Button_Pick_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow;
-            if (lvCharacters.IsFocused)
+            if (lvCharacters.SelectedIndex >= 0)
             {
-                mainWindow = new MainWindow(lvCharacters.SelectedItem)
+                mainWindow = new MainWindow((CreateCharacterModel)lvCharacters.SelectedItem);
+                Close();
+                mainWindow.ShowDialog();
             }
                 
 
