@@ -9,7 +9,7 @@ namespace DAL.Entities
     public enum Races { Human, Elf, Ork, Hobbit, Dwarf, Goblin, Murlok, Danmer, Altmer, Bosmer, Demon, Kajit }
     public enum Clases { Fighter, Ranger, Sourcer, Rogue, Paladin, Wizard, Withcer, Druid }
     public enum Aligments { LawfulGood, NeutralGood, ChaoticGood, LawfulNeutral, TrueNeutral, ChaoticNeutral, LawfulEvil, NeutralEvil, ChaoticEvil }
-    public enum Backgrounds {Spy, Soilder, ShoosedOne, Revenant, Deprived }
+    public enum Backgrounds {Spy, Soilder, ChoosedOne, Revenant, Deprived }
     public abstract class Entity
     {
         public  string Name { get; set; }

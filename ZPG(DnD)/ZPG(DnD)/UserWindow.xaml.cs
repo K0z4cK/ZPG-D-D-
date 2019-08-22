@@ -48,7 +48,7 @@ namespace ZPG_DnD_
             MainWindow mainWindow;
             if (lvCharacters.SelectedIndex >= 0)
             {
-                mainWindow = new MainWindow((CreateCharacterModel)lvCharacters.SelectedItem);
+                mainWindow = new MainWindow((CreateCharacterModel)lvCharacters.SelectedItem, User.Text);
                 Close();
                 mainWindow.ShowDialog();
             }
@@ -59,16 +59,23 @@ namespace ZPG_DnD_
         private void Button_Add_Click(object sender, RoutedEventArgs e)
         {
             InputBox inputBox = new InputBox();
+            BuildCharacterConcept characterConcept = new BuildCharacterConcept();
             int result = -1;
             CreateCharacterModel newCharacter = new CreateCharacterModel();
             CreateCharacterStats newStats = new CreateCharacterStats();
             CreateCharacterSkills newSkills = new CreateCharacterSkills();
             inputBox.ShowDialog();
-            if (inputBox.Text.Text == "")
+            characterConcept.ShowDialog();
+            if (inputBox.Text.Text == "" || characterConcept.lvRaces.SelectedIndex < 0 || characterConcept.lvClases.SelectedIndex < 0 ||
+                characterConcept.lvAlignments.SelectedIndex < 0 || characterConcept.lvBackgrounds.SelectedIndex < 0)
                 MessageBox.Show("Error while add character");
             else
             {
                 newCharacter.Name = inputBox.Text.Text;
+                newCharacter.Race = (Races)characterConcept.lvRaces.SelectedIndex;
+                newCharacter.Class = (Clases)characterConcept.lvClases.SelectedIndex;
+                newCharacter.Aligment = (Aligments)characterConcept.lvAlignments.SelectedIndex;
+                newCharacter.Background = (Backgrounds)characterConcept.lvBackgrounds.SelectedIndex;
                 result = _characterService.Create(newCharacter, newStats, newSkills, _idUser);
                 lvCharacters.Items.Add(newCharacter);
             }

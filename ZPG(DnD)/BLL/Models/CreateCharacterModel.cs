@@ -11,9 +11,11 @@ namespace BLL.Models
     {
         public string Name { get; set; }
         public Races Race { get; set; }
-        public Clases Clase { get; set; }
+        public Clases Class { get; set; }
         public Aligments Aligment { get; set; }
         public Backgrounds Background { get; set; }
+        public int Exp { get; set; }
+        public int Level { get; set; }
         public int ArmorClass { get; set; }
         public int Intitiative { get; set; }
         public int Speed { get; set; }

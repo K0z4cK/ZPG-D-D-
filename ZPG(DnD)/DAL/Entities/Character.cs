@@ -17,11 +17,13 @@ namespace DAL.Entities
 
         [ForeignKey("UserOf")]
         public int UserId { get; set; }
-
+        public int Level { get; set; }
+        public int Exp { get; set; }
         public Races Race { get; set; }
-        public Clases Clase { get; set; }
+        public Clases Class { get; set; }
         public Aligments Aligment { get; set; }
         public Backgrounds Background { get; set; }
         public virtual User UserOf { get ; set; }
-        }
+        public virtual CharacterSkills CharacterSkillsOf { get; set; }
+    }
 }

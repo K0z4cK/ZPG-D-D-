@@ -51,6 +51,8 @@ namespace BLL.Services
             character.Intitiative = random.Next(-6, 10);
             character.Speed = random.Next(50);
             character.ArmorClass = random.Next(40);
+            character.Level = 1;
+            character.Exp = 0;
 
             stats.Charisma = random.Next(-4, 6);
             stats.Constitution = random.Next(-4, 6);
@@ -60,31 +62,37 @@ namespace BLL.Services
             stats.Wisdom = random.Next(-4, 6);
 
             skills.Acrobatics = random.Next(-2, 4);
-            skills.AnimalHandling = random.Next(-4, 6);
-            skills.Athletics = random.Next(-4, 6);
-            skills.Medicine = random.Next(-4, 6);
-            skills.Persuasion = random.Next(-4, 6);
-            skills.Religion = random.Next(-4, 6);
-            skills.SleightOfHand = random.Next(-4, 6);
-            skills.Stealth = random.Next(-4, 6);
-            skills.Survival = random.Next(-4, 6);
+            skills.AnimalHandling = random.Next(-2, 4);
+            skills.Athletics = random.Next(-2, 4);
+            skills.Medicine = random.Next(-2, 4);
+            skills.Persuasion = random.Next(-2, 4);
+            skills.Religion = random.Next(-2, 4);
+            skills.SleightOfHand = random.Next(-2, 4);
+            skills.Stealth = random.Next(-2, 4);
+            skills.Survival = random.Next(-2, 4);
 
             _characterRepository.Add(new Character()
             {
                 Name = character.Name,
                 HPMax = character.HPMax,
                 HP = character.HP,
+                Race = character.Race,
+                Class = character.Class,
+                Aligment = character.Aligment,
+                Background = character.Background,
                 Intitiative = character.Intitiative,
                 Speed = character.Speed,
                 ArmorClass = character.ArmorClass,
+                Level = character.Level,
+                Exp = character.Exp,
                 UserId = userId
 
             });
 
             _skillsRepository.Add(new CharacterSkills()
             {
-                Id = 1,//_characterRepository.Get().FirstOrDefault(
-                //u => u.Name == character.Name).Id,
+                Id = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id,
                 Acrobatics = skills.Acrobatics,
                 AnimalHandling = skills.AnimalHandling,
                 Athletics = skills.Athletics,
@@ -97,8 +105,8 @@ namespace BLL.Services
             });
             _statsRepository.Add(new CharacterStats()
             {
-                Id = 1,//_characterRepository.Get().FirstOrDefault(
-                //u => u.Name == character.Name).Id,
+                Id = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id,
                 Charisma = stats.Charisma,
                 Constitution = stats.Constitution,
                 Dexterity = stats.Dexterity,

@@ -64,7 +64,7 @@ namespace DAL.Migrations
                 "dbo.tbl_CharacterSkills",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false, identity: false),
                         Acrobatics = c.Int(nullable: false),
                         AnimalHandling = c.Int(nullable: false),
                         Arcana = c.Int(nullable: false),
@@ -90,7 +90,7 @@ namespace DAL.Migrations
                 "dbo.tbl_CharacterStats",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false, identity: false),
                         Strength = c.Int(nullable: false),
                         Dexterity = c.Int(nullable: false),
                         Constitution = c.Int(nullable: false),

@@ -22,7 +22,7 @@ namespace DAL.Repositories
                 _context.SaveChanges();
                 return elem.Id;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return -1;
             }
