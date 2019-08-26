@@ -38,8 +38,8 @@ namespace ZPG_DnD_
             if (res > 0)
             {
                 this.Visibility = Visibility.Hidden;
-                UserWindow gallery = new UserWindow(res);
-                if (gallery.ShowDialog() == true)
+                UserWindow window = new UserWindow(res);
+                if (window.ShowDialog() == true)
                 {
                     this.Visibility = Visibility.Visible;
                 }

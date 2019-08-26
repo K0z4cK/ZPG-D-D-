@@ -16,12 +16,16 @@ namespace BLL.Services
         private readonly IZPGRepository<Character> _characterRepository;
         private readonly IZPGRepository<CharacterSkills> _skillsRepository;
         private readonly IZPGRepository<CharacterStats> _statsRepository;
+        private readonly IZPGRepository<CharacterInventory> _inventoryRepository;
+        private readonly IZPGRepository<CharacterItem> _characterItemRepository;
 
         public CharacterService()
         {
             _characterRepository = new CharacterRepository(_context);
             _skillsRepository = new CharacterSkillsRepository(_context);
             _statsRepository = new CharacterStatsRepository(_context);
+            _inventoryRepository = new CharacterInventoryRepository(_context);
+            _characterItemRepository = new CharacterItemRepository(_context);
         }
         public IEnumerable<CreateCharacterModel> GetCharactersByUserId(int userId)
         {
@@ -114,11 +118,82 @@ namespace BLL.Services
                 Strength = stats.Strength,
                 Wisdom = stats.Wisdom
             });
+            _inventoryRepository.Add(new CharacterInventory()
+            {
+                Id = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id,
+            });
+            _characterItemRepository.Add(new CharacterItem()
+            {
+                ItemId = 1,
+                InventoryId = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id
+            });
+            _characterItemRepository.Add(new CharacterItem()
+            {
+                ItemId = 1,
+                InventoryId = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id
+            });
+            _characterItemRepository.Add(new CharacterItem()
+            {
+                ItemId = 2,
+                InventoryId = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id
+            });
+            _characterItemRepository.Add(new CharacterItem()
+            {
+                ItemId = 3,
+                InventoryId = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id
+            });
+            _characterItemRepository.Add(new CharacterItem()
+            {
+                ItemId = 4,
+                InventoryId = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id
+            });
+            _characterItemRepository.Add(new CharacterItem()
+            {
+                ItemId = 5,
+                InventoryId = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id
+            });
+            _characterItemRepository.Add(new CharacterItem()
+            {
+                ItemId = 6,
+                InventoryId = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id
+            });
+            _characterItemRepository.Add(new CharacterItem()
+            {
+                ItemId = 7,
+                InventoryId = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id
+            });
 
             return _characterRepository.Get().FirstOrDefault(
                 u => u.Name == character.Name).Id;
         }
-        public bool Die()
+        public int Delete(CreateCharacterModel character, int userId)
+        {
+            int characterId = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id;
+
+            _inventoryRepository.Delete(_inventoryRepository.Get().FirstOrDefault(u => u.Id == characterId).Id);
+
+            _statsRepository.Delete(_statsRepository.Get().FirstOrDefault(
+                u => u.Id == characterId).Id);
+
+            _skillsRepository.Delete(_skillsRepository.Get().FirstOrDefault(
+                u => u.Id == characterId).Id);
+
+            _characterRepository.Delete(_characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name).Id);
+
+            return characterId;
+        }
+            public bool Die()
         {
             throw new NotImplementedException();
         }

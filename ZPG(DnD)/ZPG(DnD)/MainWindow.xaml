@@ -99,19 +99,19 @@
         <TextBlock Grid.Column="7" Grid.Row="5" Text="Equipment" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="79" Margin="6,0,0,0"  />
         <Border Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="5" Grid.RowSpan="2" BorderThickness="1" BorderBrush="Black" Height="102" VerticalAlignment="Top" Margin="0,20,0,0">
         </Border>
-        <TextBlock x:Name="chest" Text="Chest:" Grid.Column="7"  Grid.Row="5"  FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,21,0,24"  />
-        <TextBlock x:Name="weapon" Text="Weapon:" Grid.Column="8"  Grid.Row="5"  FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,21,0,24"  />
-        <TextBlock x:Name="head" Text="Head:" Grid.Column="7"  Grid.Row="5"  FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,65,0,0" Grid.RowSpan="2" />
-        <TextBlock x:Name="amulet" Text="Amulet:" Grid.Column="7"  Grid.Row="6"  FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,25,0,18" />
-        <TextBlock x:Name="hand" Text="Hand:" Grid.Column="8"  Grid.Row="5"  FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4,65,0,0" Grid.RowSpan="2" />
-        <TextBlock x:Name="boots" Text="Boots:" Grid.Column="8"  Grid.Row="6"  FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,25,0,18" />
+        <TextBlock x:Name="armor" Text="Armor:" Grid.Column="7"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,21,0,24" Grid.ColumnSpan="2" Width="143"  />
+        <TextBlock x:Name="weapon" Text="Weapon:" Grid.Column="8"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,23,10,26" Grid.ColumnSpan="2" Width="168"  />
+        <TextBlock x:Name="head" Text="Head:" Grid.Column="7"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,65,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2" Width="154" />
+        <TextBlock x:Name="amulet" Text="Amulet:" Grid.Column="7"  Grid.Row="6"  FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,25,0,18" Grid.ColumnSpan="2" Width="161" />
+        <TextBlock x:Name="gloves" Text="Gloves:" Grid.Column="8"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,65,10,0" Grid.RowSpan="2" Grid.ColumnSpan="2" Width="168" />
+        <TextBlock x:Name="boots" Text="Boots:" Grid.Column="8"  Grid.Row="6"  FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,25,10,18" Grid.ColumnSpan="2" Width="161" />
 
 
 
         <TextBlock Grid.Column="4" Grid.Row="7" Text="Inventory" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="72" Margin="5,0,6,0"  />
         <Border Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="7" Grid.RowSpan="4" BorderThickness="1" BorderBrush="Black" Height="233" VerticalAlignment="Top" Margin="0,20,0,0">
-            <ListBox>
-            </ListBox>
+            <ListView x:Name="LVinventory">
+            </ListView>
         </Border>
         <TextBlock x:Name="coins" Text="Coins: 0" Grid.Column="3" Grid.Row="11" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0,0,0"  />
 

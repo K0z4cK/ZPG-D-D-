@@ -11,6 +11,7 @@ namespace BLL.Interfaces
     {
         IEnumerable<CreateCharacterModel> GetCharactersByUserId(int userId);
         int Create(CreateCharacterModel character, CreateCharacterStats stats, CreateCharacterSkills skills, int userId);
+        int Delete(CreateCharacterModel character, int userId);
         bool Pick();
         bool Walk();
         bool Explore();

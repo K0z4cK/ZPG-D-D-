@@ -60,7 +60,6 @@ namespace ZPG_DnD_
         {
             InputBox inputBox = new InputBox();
             BuildCharacterConcept characterConcept = new BuildCharacterConcept();
-            int result = -1;
             CreateCharacterModel newCharacter = new CreateCharacterModel();
             CreateCharacterStats newStats = new CreateCharacterStats();
             CreateCharacterSkills newSkills = new CreateCharacterSkills();
@@ -76,7 +75,7 @@ namespace ZPG_DnD_
                 newCharacter.Class = (Clases)characterConcept.lvClases.SelectedIndex;
                 newCharacter.Aligment = (Aligments)characterConcept.lvAlignments.SelectedIndex;
                 newCharacter.Background = (Backgrounds)characterConcept.lvBackgrounds.SelectedIndex;
-                result = _characterService.Create(newCharacter, newStats, newSkills, _idUser);
+                _characterService.Create(newCharacter, newStats, newSkills, _idUser);
                 lvCharacters.Items.Add(newCharacter);
             }
         }
@@ -86,9 +85,9 @@ namespace ZPG_DnD_
             if (lvCharacters.SelectedIndex >= 0)
             {
                 CreateCharacterModel dell = (CreateCharacterModel)lvCharacters.SelectedItem;
+
                 lvCharacters.Items.Remove(lvCharacters.SelectedItem);
-                _repository.Delete(_repository.Get().FirstOrDefault(
-                u => u.Name == dell.Name).Id);
+                _characterService.Delete(dell, _idUser);
             }
         }
     }
