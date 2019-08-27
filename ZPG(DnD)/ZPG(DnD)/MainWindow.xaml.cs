@@ -34,6 +34,7 @@ namespace ZPG_DnD_
         private readonly IZPGRepository<CharacterItem> _characterItemRepository;
         public MainWindow(CreateCharacterModel character, string username)
         {
+            _characterService = new CharacterService();
             _characterRepository = new CharacterRepository(_context);
             _skillsRepository = new CharacterSkillsRepository(_context);
             _statsRepository = new CharacterStatsRepository(_context);
