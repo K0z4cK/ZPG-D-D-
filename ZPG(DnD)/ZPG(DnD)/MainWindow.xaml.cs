@@ -104,9 +104,9 @@ namespace ZPG_DnD_
 
             });*/
             //LVinventory.Items.Add(_inventoryRepository.Get().FirstOrDefault(u => u.Id == characterId).CharacterItems.FirstOrDefault().ItemOf.Name);
-            
-            setInventory(charInventory);
             setEquipment(charInventory);
+            setInventory(charInventory);
+            
         }
         public void setInventory(ICollection<CharacterItem> charInventory)
         {
@@ -123,7 +123,7 @@ namespace ZPG_DnD_
                     if (i.ToString() == item.ItemOf.Name + "   x" + numOfItems.ToString())
                         isAlreadyPresent = true;
 
-                if (!isAlreadyPresent)
+                if (!isAlreadyPresent && !item.ItemOf.isDressed)
                     LVinventory.Items.Add(item.ItemOf.Name + "   x" + numOfItems.ToString());
             }
         }

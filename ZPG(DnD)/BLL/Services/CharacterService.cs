@@ -123,54 +123,14 @@ namespace BLL.Services
                 Id = _characterRepository.Get().FirstOrDefault(
                 u => u.Name == character.Name).Id,
             });
-            _characterItemRepository.Add(new CharacterItem()
-            {
-                ItemId = 1,
-                InventoryId = _characterRepository.Get().FirstOrDefault(
-                u => u.Name == character.Name).Id
-            });
-            _characterItemRepository.Add(new CharacterItem()
-            {
-                ItemId = 1,
-                InventoryId = _characterRepository.Get().FirstOrDefault(
-                u => u.Name == character.Name).Id
-            });
-            _characterItemRepository.Add(new CharacterItem()
-            {
-                ItemId = 2,
-                InventoryId = _characterRepository.Get().FirstOrDefault(
-                u => u.Name == character.Name).Id
-            });
-            _characterItemRepository.Add(new CharacterItem()
-            {
-                ItemId = 3,
-                InventoryId = _characterRepository.Get().FirstOrDefault(
-                u => u.Name == character.Name).Id
-            });
-            _characterItemRepository.Add(new CharacterItem()
-            {
-                ItemId = 4,
-                InventoryId = _characterRepository.Get().FirstOrDefault(
-                u => u.Name == character.Name).Id
-            });
-            _characterItemRepository.Add(new CharacterItem()
-            {
-                ItemId = 5,
-                InventoryId = _characterRepository.Get().FirstOrDefault(
-                u => u.Name == character.Name).Id
-            });
-            _characterItemRepository.Add(new CharacterItem()
-            {
-                ItemId = 6,
-                InventoryId = _characterRepository.Get().FirstOrDefault(
-                u => u.Name == character.Name).Id
-            });
-            _characterItemRepository.Add(new CharacterItem()
-            {
-                ItemId = 7,
-                InventoryId = _characterRepository.Get().FirstOrDefault(
-                u => u.Name == character.Name).Id
-            });
+            for(int i = 1; i <= 7; i++) 
+                _characterItemRepository.Add(new CharacterItem()
+                {
+                    ItemId = i,
+                    InventoryId = _characterRepository.Get().FirstOrDefault(
+                    u => u.Name == character.Name).Id
+                });
+            
 
             return _characterRepository.Get().FirstOrDefault(
                 u => u.Name == character.Name).Id;
@@ -193,7 +153,7 @@ namespace BLL.Services
 
             return characterId;
         }
-            public bool Die()
+        public bool Die()
         {
             throw new NotImplementedException();
         }
