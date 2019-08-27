@@ -96,6 +96,7 @@ namespace ZPG_DnD_
             strengthNum.Text = stats.Strength.ToString();
             wisdomNum.Text = stats.Wisdom.ToString();
 
+            coins.Text = "Coins: " + character.Coins.ToString();
             /*_characterItemRepository.Add(new CharacterItem()
             {
                 ItemId = 1,

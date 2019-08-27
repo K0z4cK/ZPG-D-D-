@@ -55,6 +55,7 @@ namespace BLL.Services
             character.Intitiative = random.Next(-6, 10);
             character.Speed = random.Next(50);
             character.ArmorClass = random.Next(40);
+            character.Coins = 0;
             character.Level = 1;
             character.Exp = 0;
 
@@ -87,6 +88,7 @@ namespace BLL.Services
                 Intitiative = character.Intitiative,
                 Speed = character.Speed,
                 ArmorClass = character.ArmorClass,
+                Coins = character.Coins,
                 Level = character.Level,
                 Exp = character.Exp,
                 UserId = userId

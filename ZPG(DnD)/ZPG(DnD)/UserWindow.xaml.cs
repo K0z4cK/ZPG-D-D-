@@ -38,6 +38,7 @@ namespace ZPG_DnD_
             InitializeComponent();
             _idUser = id;
             User.Text = _userService.GetUser(_idUser).Login;
+            
             var characters = _characterService.GetCharactersByUserId(_idUser);
             foreach(var c in characters)
                 lvCharacters.Items.Add(c);

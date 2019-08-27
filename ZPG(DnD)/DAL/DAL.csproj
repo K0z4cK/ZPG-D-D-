@@ -118,6 +118,10 @@
     <Compile Include="Migrations\201908261810260_EntitMig13.Designer.cs">
       <DependentUpon>201908261810260_EntitMig13.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908271006323_EntitMig14.cs" />
+    <Compile Include="Migrations\201908271006323_EntitMig14.Designer.cs">
+      <DependentUpon>201908271006323_EntitMig14.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CharacterItemRepository.cs" />
@@ -176,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908261810260_EntitMig13.resx">
       <DependentUpon>201908261810260_EntitMig13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908271006323_EntitMig14.resx">
+      <DependentUpon>201908271006323_EntitMig14.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

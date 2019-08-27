@@ -14,6 +14,7 @@ namespace BLL.Models
         public Clases Class { get; set; }
         public Aligments Aligment { get; set; }
         public Backgrounds Background { get; set; }
+        public int Coins { get; set; }
         public int Exp { get; set; }
         public int Level { get; set; }
         public int ArmorClass { get; set; }

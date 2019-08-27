@@ -19,6 +19,7 @@ namespace DAL.Entities
         public int UserId { get; set; }
         public int Level { get; set; }
         public int Exp { get; set; }
+        public int Coins { get; set; }
         public Races Race { get; set; }
         public Clases Class { get; set; }
         public Aligments Aligment { get; set; }
