@@ -1,4 +1,6 @@
-﻿using BLL.Models;
+﻿using BLL.Interfaces;
+using BLL.Models;
+using BLL.Services;
 using DAL.Entities;
 using DAL.Repositories;
 using System;
@@ -18,12 +20,13 @@ using System.Windows.Shapes;
 
 namespace ZPG_DnD_
 {
-    /// <summary>
+    /// <summary>Skills
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
         private readonly EFContext _context = new EFContext();
+        private readonly ICharacterService _characterService;
         private readonly IZPGRepository<Character> _characterRepository;
         private readonly IZPGRepository<CharacterSkills> _skillsRepository;
         private readonly IZPGRepository<CharacterStats> _statsRepository;
@@ -39,33 +42,9 @@ namespace ZPG_DnD_
             InitializeComponent();
             CreateCharacterSkills skills = new CreateCharacterSkills();
             CreateCharacterStats stats = new CreateCharacterStats();
-            
-            int characterId = _characterRepository.Get().FirstOrDefault(
-                u => u.Name == character.Name).Id;
 
+            int characterId = _characterService.SetCharacter(character, skills, stats);
             var charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == characterId).CharacterItems;
-
-            character.Aligment = _characterRepository.Get().FirstOrDefault(u => u.Id == characterId).Aligment;
-            character.Background = _characterRepository.Get().FirstOrDefault(u => u.Id == characterId).Background;
-            character.Class = _characterRepository.Get().FirstOrDefault(u => u.Id == characterId).Class;
-            character.Race = _characterRepository.Get().FirstOrDefault(u => u.Id == characterId).Race;
-
-            skills.Acrobatics = _skillsRepository.Get().FirstOrDefault(u => u.Id == characterId).Acrobatics;
-            skills.AnimalHandling = _skillsRepository.Get().FirstOrDefault(u => u.Id == characterId).AnimalHandling;
-            skills.Athletics = _skillsRepository.Get().FirstOrDefault(u => u.Id == characterId).Athletics;
-            skills.Medicine = _skillsRepository.Get().FirstOrDefault(u => u.Id == characterId).Medicine;
-            skills.Persuasion = _skillsRepository.Get().FirstOrDefault(u => u.Id == characterId).Persuasion;
-            skills.Religion = _skillsRepository.Get().FirstOrDefault(u => u.Id == characterId).Religion;
-            skills.SleightOfHand = _skillsRepository.Get().FirstOrDefault(u => u.Id == characterId).SleightOfHand;
-            skills.Stealth = _skillsRepository.Get().FirstOrDefault(u => u.Id == characterId).Stealth;
-            skills.Survival = _skillsRepository.Get().FirstOrDefault(u => u.Id == characterId).Survival;
-
-            stats.Charisma = _statsRepository.Get().FirstOrDefault(u => u.Id == characterId).Charisma;
-            stats.Constitution = _statsRepository.Get().FirstOrDefault(u => u.Id == characterId).Constitution;
-            stats.Dexterity = _statsRepository.Get().FirstOrDefault(u => u.Id == characterId).Dexterity;
-            stats.Intelligence = _statsRepository.Get().FirstOrDefault(u => u.Id == characterId).Intelligence;
-            stats.Strength = _statsRepository.Get().FirstOrDefault(u => u.Id == characterId).Strength;
-            stats.Wisdom = _statsRepository.Get().FirstOrDefault(u => u.Id == characterId).Wisdom;
             //this.DataContext = character;
             userName.Text = username;
             characterName.Text = character.Name;

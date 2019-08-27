@@ -43,6 +43,7 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -60,6 +61,7 @@
     <Compile Include="Models\CreateCharacterModel.cs" />
     <Compile Include="Models\CreateCharacterSkills.cs" />
     <Compile Include="Models\CreateCharacterStats.cs" />
+    <Compile Include="Models\CreateEnemyModel.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserRegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

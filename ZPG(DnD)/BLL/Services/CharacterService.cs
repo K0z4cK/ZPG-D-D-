@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace BLL.Services
 {
@@ -18,7 +19,9 @@ namespace BLL.Services
         private readonly IZPGRepository<CharacterStats> _statsRepository;
         private readonly IZPGRepository<CharacterInventory> _inventoryRepository;
         private readonly IZPGRepository<CharacterItem> _characterItemRepository;
-
+        private readonly IZPGRepository<Enemy> _EnemyRepository;
+        private readonly IZPGRepository<EnemyInventory> _enemyInventoryRepository;
+        private readonly IZPGRepository<EnemyItem> _enemyItemRepository;
         public CharacterService()
         {
             _characterRepository = new CharacterRepository(_context);
@@ -26,6 +29,9 @@ namespace BLL.Services
             _statsRepository = new CharacterStatsRepository(_context);
             _inventoryRepository = new CharacterInventoryRepository(_context);
             _characterItemRepository = new CharacterItemRepository(_context);
+            _EnemyRepository = new EnemyRepository(_context);
+            _enemyInventoryRepository = new EnemyInventoryRepository(_context);
+            _enemyItemRepository = new EnemyItemRepository(_context);
         }
         public IEnumerable<CreateCharacterModel> GetCharactersByUserId(int userId)
         {
@@ -42,11 +48,6 @@ namespace BLL.Services
                   }
               );
         }
-        public bool CheckSituation()
-        {
-            throw new NotImplementedException();
-        }
-
         public int Create(CreateCharacterModel character, CreateCharacterStats stats, CreateCharacterSkills skills, int userId)
         {
             Random random = new Random();
@@ -58,6 +59,7 @@ namespace BLL.Services
             character.Coins = 0;
             character.Level = 1;
             character.Exp = 0;
+            character.isFighting = false;
 
             stats.Charisma = random.Next(-4, 6);
             stats.Constitution = random.Next(-4, 6);
@@ -137,6 +139,39 @@ namespace BLL.Services
             return _characterRepository.Get().FirstOrDefault(
                 u => u.Name == character.Name).Id;
         }
+        public int SetCharacter(CreateCharacterModel character, CreateCharacterSkills skills, CreateCharacterStats stats)
+        {
+            var characterRepository = _characterRepository.Get().FirstOrDefault(
+                u => u.Name == character.Name);
+
+            int characterId = characterRepository.Id;
+
+            var SkillsTemp = _skillsRepository.Get().FirstOrDefault(u => u.Id == characterId);
+            var StatsTemp = _statsRepository.Get().FirstOrDefault(u => u.Id == characterId);
+
+            character.Aligment = characterRepository.Aligment;
+            character.Background = characterRepository.Background;
+            character.Class = characterRepository.Class;
+            character.Race = characterRepository.Race;
+
+            skills.Acrobatics = SkillsTemp.Acrobatics;
+            skills.AnimalHandling = SkillsTemp.AnimalHandling;
+            skills.Athletics = SkillsTemp.Athletics;
+            skills.Medicine = SkillsTemp.Medicine;
+            skills.Persuasion = SkillsTemp.Persuasion;
+            skills.Religion = SkillsTemp.Religion;
+            skills.SleightOfHand = SkillsTemp.SleightOfHand;
+            skills.Stealth = SkillsTemp.Stealth;
+            skills.Survival = SkillsTemp.Survival;
+
+            stats.Charisma = StatsTemp.Charisma;
+            stats.Constitution = StatsTemp.Constitution;
+            stats.Dexterity = StatsTemp.Dexterity;
+            stats.Intelligence = StatsTemp.Intelligence;
+            stats.Strength = StatsTemp.Strength;
+            stats.Wisdom = StatsTemp.Wisdom;
+            return characterId;
+        }
         public int Delete(CreateCharacterModel character, int userId)
         {
             int characterId = _characterRepository.Get().FirstOrDefault(
@@ -155,6 +190,15 @@ namespace BLL.Services
 
             return characterId;
         }
+        public bool CheckSituation(CreateCharacterModel character, ListView log)
+        {
+            if (!character.isFighting && character.HP > 1)
+                return Fight(character, log);
+            else if (!character.isFighting && character.HP <= 1)
+                return GoToCity();
+            else return Die();
+        }
+
         public bool Die()
         {
             throw new NotImplementedException();
@@ -165,9 +209,47 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public bool Fight()
+        public bool Fight(CreateCharacterModel character, ListView log)
         {
-            throw new NotImplementedException();
+            Random random = new Random();
+            CreateCharacterSkills skills = new CreateCharacterSkills();
+            CreateCharacterStats stats = new CreateCharacterStats();
+            int characterId = SetCharacter(character, skills, stats);
+            var charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == characterId).CharacterItems;
+            int WeaponId = 0;
+            foreach (var item in charInventory)
+                if (item.ItemOf.TypeOfItem == typeOfItem.Weapon && item.ItemOf.isDressed == true)
+                    WeaponId = item.ItemId;
+            var charWeapon = charInventory.FirstOrDefault(u => u.ItemId == WeaponId).ItemOf;
+            CreateEnemyModel enemy;
+            int enemyId = random.Next(_EnemyRepository.Get().Last().Id);
+            var EnemyTemp = _EnemyRepository.Get().FirstOrDefault(u => u.Id == enemyId);
+            enemy = new CreateEnemyModel()
+            {
+                ArmorClass = EnemyTemp.ArmorClass,
+                ExpGained = EnemyTemp.ExpGained,
+                HP = EnemyTemp.HP,
+                HPMax = EnemyTemp.HPMax,
+                Intitiative = EnemyTemp.Intitiative,
+                Name = EnemyTemp.Name,
+                IsBoss = EnemyTemp.IsBoss,
+                Speed = EnemyTemp.Speed
+            };
+            character.isFighting = true;
+            do
+            {
+                int charInit = random.Next(character.Intitiative, 11);
+                int charHit = skills.SleightOfHand + stats.Strength + charWeapon.equipmentBonus;
+                int enemInit = random.Next(enemy.Intitiative, 11);
+
+                if (charInit > enemInit)
+                    enemy.HP -= charHit;
+
+
+            } while (enemy.HP < 0 || character.HP < 0);
+            if (character.HP > 0)
+                return Walk();
+            else return Die();
         }
 
         public bool Pick()
@@ -199,5 +281,17 @@ namespace BLL.Services
         {
             throw new NotImplementedException();
         }
+
+        public bool GoToCity()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CheckSituation()
+        {
+            throw new NotImplementedException();
+        }
+
+        
     }
 }

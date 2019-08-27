@@ -22,5 +22,6 @@ namespace BLL.Models
         public int Speed { get; set; }
         public int HPMax { get; set; }
         public int HP { get; set; }
+        public bool isFighting { get; set; }
     }
 }

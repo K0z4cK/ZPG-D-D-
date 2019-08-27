@@ -136,14 +136,10 @@
         </Border>
         <Border Background="Black" Grid.Column="11" Grid.RowSpan="13" />
 
-        <Border Grid.Row="2" Grid.Column="13" BorderThickness="2" BorderBrush="Black" Grid.RowSpan="5" Margin="0,0,-563,0">
-        </Border >
-        <Button  Grid.Row="3" Grid.Column="13" Margin="10,8,-111,8" />
-        <Button  Grid.Row="3" Grid.Column="13" Margin="236,10,-337,6" />
-        <Button  Grid.Row="3" Grid.Column="13" Margin="450,10,-551,6" />
+        
 
-        <Border Grid.Row="8" Grid.Column="13" BorderThickness="2" BorderBrush="Black" Grid.RowSpan="5" Margin="0,0,-563,10">
-            <ListView>
+        <Border Grid.Row="2" Grid.Column="13" BorderThickness="2" BorderBrush="Black" Grid.RowSpan="10" Margin="0,0,-563,10">
+            <ListView x:Name="Log">
             </ListView>
         </Border>
     </Grid>
