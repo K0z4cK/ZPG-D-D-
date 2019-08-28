@@ -35,7 +35,7 @@ namespace BLL.Services
         {
             int result = -1;
             User newUser;
-            if (user.Password == user.RePassword)
+            if (user.Password == user.RePassword&& user.Password.Length >= 6)
             {
                 newUser = new User() { Login = user.Login, Password = user.Password };
                 _repository.Add(newUser);

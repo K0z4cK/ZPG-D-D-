@@ -27,7 +27,6 @@ namespace DAL.Repositories
                 return -1;
             }
         }
-
         public bool Delete(int id)
         {
             try

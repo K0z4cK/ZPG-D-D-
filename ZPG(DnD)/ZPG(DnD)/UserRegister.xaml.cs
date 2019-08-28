@@ -43,7 +43,7 @@ namespace ZPG_DnD_
             }
             else
             {
-                MessageBox.Show("Error Login or Password");
+                MessageBox.Show("Error Login or Password (Password must be 6 or more simbols)");
             }
         }
     }

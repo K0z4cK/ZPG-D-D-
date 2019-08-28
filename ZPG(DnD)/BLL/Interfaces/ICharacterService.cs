@@ -15,16 +15,16 @@ namespace BLL.Interfaces
         int SetCharacter(CreateCharacterModel character, CreateCharacterSkills skills, CreateCharacterStats stats);
         int Delete(CreateCharacterModel character, int userId);
         bool Pick();
-        bool Walk();
-        bool GoToCity();
+        string Walk(CreateCharacterModel character);
+        string GoToCity();
         bool Explore();
-        bool Fight(CreateCharacterModel character, ListView log);
+        string Fight(CreateCharacterModel character);
         bool TryToSpeak();
         bool Pray();
         bool Steal();
         bool Sneak();
-        bool Die();
-        bool CheckSituation(CreateCharacterModel character, ListView log);
+        string Die();
+        string CheckSituation(CreateCharacterModel character);
 
     }
 }

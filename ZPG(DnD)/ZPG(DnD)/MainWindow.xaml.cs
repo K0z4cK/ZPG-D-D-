@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ZPG_DnD_
 {
@@ -32,8 +34,11 @@ namespace ZPG_DnD_
         private readonly IZPGRepository<CharacterStats> _statsRepository;
         private readonly IZPGRepository<CharacterInventory> _inventoryRepository;
         private readonly IZPGRepository<CharacterItem> _characterItemRepository;
+        private DispatcherTimer timer;
+        private CreateCharacterModel _character;
         public MainWindow(CreateCharacterModel character, string username)
         {
+            _character = character;
             _characterService = new CharacterService();
             _characterRepository = new CharacterRepository(_context);
             _skillsRepository = new CharacterSkillsRepository(_context);
@@ -46,6 +51,7 @@ namespace ZPG_DnD_
 
             int characterId = _characterService.SetCharacter(character, skills, stats);
             var charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == characterId).CharacterItems;
+
             //this.DataContext = character;
             userName.Text = username;
             characterName.Text = character.Name;
@@ -85,10 +91,27 @@ namespace ZPG_DnD_
 
             });*/
             //LVinventory.Items.Add(_inventoryRepository.Get().FirstOrDefault(u => u.Id == characterId).CharacterItems.FirstOrDefault().ItemOf.Name);
-            setEquipment(charInventory);
+            setEquipment(charInventory, characterId);
             setInventory(charInventory);
-            
+
+            //таймер
+            timer = new DispatcherTimer();
+            timer.Tick += Timer_Tick;
+            //інтервал
+            timer.Interval = new TimeSpan(0, 0, 1);
+
+            // запуск таймера
+            timer.Start();
+            //timer.Enabled = true;
         }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Log.Items.Add(_characterService.CheckSituation(_character));
+            if (_characterService.CheckSituation(_character) == "You Died")
+                timer.Stop();
+        }
+
         public void setInventory(ICollection<CharacterItem> charInventory)
         {
             foreach (var item in charInventory)
@@ -108,7 +131,7 @@ namespace ZPG_DnD_
                     LVinventory.Items.Add(item.ItemOf.Name + "   x" + numOfItems.ToString());
             }
         }
-        public void setEquipment(ICollection<CharacterItem> charInventory)
+        public void setEquipment(ICollection<CharacterItem> charInventory, int inventoryID)
         {
             foreach (var item in charInventory)
             {
@@ -146,8 +169,49 @@ namespace ZPG_DnD_
                         }
                         item.ItemOf.isDressed = true;
                     }
+                    else if (item.ItemOf.isDressed == true)
+                        switch (type)
+                        {
+                            case typeOfItem.Helmet:
+                                head.Text = "Head: " + item.ItemOf.Name;
+                                break;
+                            case typeOfItem.Armor:
+                                armor.Text = "Armor: " + item.ItemOf.Name;
+                                break;
+                            case typeOfItem.Gloves:
+                                gloves.Text = "Gloves: " + item.ItemOf.Name;
+                                break;
+                            case typeOfItem.Boots:
+                                boots.Text = "Boots: " + item.ItemOf.Name;
+                                break;
+                            case typeOfItem.Weapon:
+                                weapon.Text = "Weapon: " + item.ItemOf.Name;
+                                break;
+                            case typeOfItem.Amulet:
+                                amulet.Text = "Amulet: " + item.ItemOf.Name;
+                                break;
+                            default:
+                                break;
+                        }
                 }
             }
+            //InventoryReset(inventoryID, charInventory);
+            _inventoryRepository.Edit(inventoryID, new CharacterInventory() { CharacterItems = charInventory, Id = inventoryID });
         }
+       /* public bool InventoryReset(int id, ICollection<CharacterItem> elem)
+        {
+            try
+            {
+                _context.CharInventories.FirstOrDefault(t => t.Id == id).CharacterItems.Clear();
+                foreach (var item in elem)
+                    _context.CharInventories.FirstOrDefault(t => t.Id == id).CharacterItems.(item);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }*/
     }
 }

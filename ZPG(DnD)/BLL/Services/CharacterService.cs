@@ -22,6 +22,7 @@ namespace BLL.Services
         private readonly IZPGRepository<Enemy> _EnemyRepository;
         private readonly IZPGRepository<EnemyInventory> _enemyInventoryRepository;
         private readonly IZPGRepository<EnemyItem> _enemyItemRepository;
+        private CreateEnemyModel enemy;
         public CharacterService()
         {
             _characterRepository = new CharacterRepository(_context);
@@ -190,18 +191,20 @@ namespace BLL.Services
 
             return characterId;
         }
-        public bool CheckSituation(CreateCharacterModel character, ListView log)
+        public string CheckSituation(CreateCharacterModel character)
         {
             if (!character.isFighting && character.HP > 1)
-                return Fight(character, log);
+                return Walk(character);
+            else if(character.isFighting)
+                return Fight(character);
             else if (!character.isFighting && character.HP <= 1)
                 return GoToCity();
             else return Die();
         }
 
-        public bool Die()
+        public string Die()
         {
-            throw new NotImplementedException();
+            return "You Died";
         }
 
         public bool Explore()
@@ -209,7 +212,7 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public bool Fight(CreateCharacterModel character, ListView log)
+        public string Fight(CreateCharacterModel character)
         {
             Random random = new Random();
             CreateCharacterSkills skills = new CreateCharacterSkills();
@@ -221,35 +224,34 @@ namespace BLL.Services
                 if (item.ItemOf.TypeOfItem == typeOfItem.Weapon && item.ItemOf.isDressed == true)
                     WeaponId = item.ItemId;
             var charWeapon = charInventory.FirstOrDefault(u => u.ItemId == WeaponId).ItemOf;
-            CreateEnemyModel enemy;
-            int enemyId = random.Next(_EnemyRepository.Get().Last().Id);
-            var EnemyTemp = _EnemyRepository.Get().FirstOrDefault(u => u.Id == enemyId);
-            enemy = new CreateEnemyModel()
+            
+            
+            
+            int charInit = random.Next(character.Intitiative, 11);
+            int charHit = random.Next(skills.SleightOfHand + stats.Strength + charWeapon.equipmentBonus);
+            int enemInit = random.Next(enemy.Intitiative, 11);
+            int enemyHit = random.Next((enemy.HPMax + enemy.HP) / 4);
+            if (character.HP < 0 || enemy.HP < 0)
             {
-                ArmorClass = EnemyTemp.ArmorClass,
-                ExpGained = EnemyTemp.ExpGained,
-                HP = EnemyTemp.HP,
-                HPMax = EnemyTemp.HPMax,
-                Intitiative = EnemyTemp.Intitiative,
-                Name = EnemyTemp.Name,
-                IsBoss = EnemyTemp.IsBoss,
-                Speed = EnemyTemp.Speed
-            };
-            character.isFighting = true;
-            do
+                character.isFighting = false;
+                return CheckSituation(character);
+            }
+            if (charInit > enemInit)
             {
-                int charInit = random.Next(character.Intitiative, 11);
-                int charHit = skills.SleightOfHand + stats.Strength + charWeapon.equipmentBonus;
-                int enemInit = random.Next(enemy.Intitiative, 11);
+                enemy.HP -= charHit;
+                return "You hit " + enemy.Name + " by " + charHit.ToString();
+            }
+            else
+            {
+                character.HP -= enemyHit;
+                return enemy.Name + " hit you by " + enemyHit.ToString();
+            }
+            
+            //log.Items.Add(character.Name + " meet " + enemy.Name + " and he look realy agressive\n");
 
-                if (charInit > enemInit)
-                    enemy.HP -= charHit;
-
-
-            } while (enemy.HP < 0 || character.HP < 0);
-            if (character.HP > 0)
+            /*if (character.HP > 0)
                 return Walk();
-            else return Die();
+            else return Die();*/
         }
 
         public bool Pick()
@@ -277,17 +279,29 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public bool Walk()
+        public string Walk(CreateCharacterModel character)
         {
-            throw new NotImplementedException();
+            Random random = new Random();
+            int enemyId = random.Next(_EnemyRepository.Get().Last().Id);
+            if (enemyId == 2)
+                enemyId--;
+            var EnemyTemp = _EnemyRepository.Get().FirstOrDefault(u => u.Id == enemyId);
+            enemy = new CreateEnemyModel()
+            {
+                ArmorClass = EnemyTemp.ArmorClass,
+                ExpGained = EnemyTemp.ExpGained,
+                HP = EnemyTemp.HP,
+                HPMax = EnemyTemp.HPMax,
+                Intitiative = EnemyTemp.Intitiative,
+                Name = EnemyTemp.Name,
+                IsBoss = EnemyTemp.IsBoss,
+                Speed = EnemyTemp.Speed
+            };
+            character.isFighting = true;
+            return "You meet " + enemy.Name + " and he look realy agressive";
         }
 
-        public bool GoToCity()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool CheckSituation()
+        public string GoToCity()
         {
             throw new NotImplementedException();
         }
