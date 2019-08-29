@@ -107,8 +107,12 @@ namespace ZPG_DnD_
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            Log.Items.Add(_characterService.CheckSituation(_character));
-            if (_characterService.CheckSituation(_character) == "You Died")
+            string situation = _characterService.CheckSituation(_character);
+            Log.Items.Add(situation);
+            healthPoints.Text = _character.HP.ToString() + "/" + _character.HPMax.ToString();
+
+            //if (_character.HP <= 0)
+            if (situation == "You Died")
                 timer.Stop();
         }
 

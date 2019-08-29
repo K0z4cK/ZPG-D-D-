@@ -195,9 +195,9 @@ namespace BLL.Services
         {
             if (!character.isFighting && character.HP > 1)
                 return Walk(character);
-            else if(character.isFighting)
+            else if (character.isFighting)
                 return Fight(character);
-            else if (!character.isFighting && character.HP <= 1)
+            else if (!character.isFighting && character.HP == 1)
                 return GoToCity();
             else return Die();
         }
@@ -214,6 +214,16 @@ namespace BLL.Services
 
         public string Fight(CreateCharacterModel character)
         {
+            if (character.HP <= 0 || enemy.HP <= 0)
+            {
+                character.isFighting = false;
+                if (enemy.HP <= 0 && character.HP > 0)
+                {
+                    character.Exp += enemy.ExpGained;
+                    return "You killed " + enemy.Name;
+                }
+                return Die();
+            }
             Random random = new Random();
             CreateCharacterSkills skills = new CreateCharacterSkills();
             CreateCharacterStats stats = new CreateCharacterStats();
@@ -231,23 +241,20 @@ namespace BLL.Services
             int charHit = random.Next(skills.SleightOfHand + stats.Strength + charWeapon.equipmentBonus);
             int enemInit = random.Next(enemy.Intitiative, 11);
             int enemyHit = random.Next((enemy.HPMax + enemy.HP) / 4);
-            if (character.HP < 0 || enemy.HP < 0)
-            {
-                character.isFighting = false;
-                return CheckSituation(character);
-            }
-            if (charInit > enemInit)
-            {
-                enemy.HP -= charHit;
-                return "You hit " + enemy.Name + " by " + charHit.ToString();
-            }
-            else
+
+            
+            
+            if (charInit < enemInit)
             {
                 character.HP -= enemyHit;
                 return enemy.Name + " hit you by " + enemyHit.ToString();
             }
+            else
+            {
+                enemy.HP -= charHit;
+                return "You hit " + enemy.Name + " by " + charHit.ToString();
+            }
             
-            //log.Items.Add(character.Name + " meet " + enemy.Name + " and he look realy agressive\n");
 
             /*if (character.HP > 0)
                 return Walk();
@@ -285,7 +292,10 @@ namespace BLL.Services
             int enemyId = random.Next(_EnemyRepository.Get().Last().Id);
             if (enemyId == 2)
                 enemyId--;
+            if (enemyId == 0)
+                enemyId++;
             var EnemyTemp = _EnemyRepository.Get().FirstOrDefault(u => u.Id == enemyId);
+            
             enemy = new CreateEnemyModel()
             {
                 ArmorClass = EnemyTemp.ArmorClass,
@@ -303,7 +313,7 @@ namespace BLL.Services
 
         public string GoToCity()
         {
-            throw new NotImplementedException();
+            return "You Go To City";
         }
 
         
