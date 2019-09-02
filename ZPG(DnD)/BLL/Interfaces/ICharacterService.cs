@@ -1,4 +1,5 @@
 ﻿using BLL.Models;
+using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +17,16 @@ namespace BLL.Interfaces
         int Delete(CreateCharacterModel character, int userId);
         bool Pick();
         string Walk(CreateCharacterModel character);
-        string GoToCity();
+        string GoToCity(CreateCharacterModel character);
         bool Explore();
         string Fight(CreateCharacterModel character);
+        string Loot(CreateCharacterModel character, ICollection<CharacterItem> charInventory);
         bool TryToSpeak();
         bool Pray();
         bool Steal();
         bool Sneak();
-        string Die();
-        string CheckSituation(CreateCharacterModel character);
+        string Die(CreateCharacterModel character);
+        string CheckSituation(CreateCharacterModel character, ICollection<CharacterItem> charInventory);
 
     }
 }

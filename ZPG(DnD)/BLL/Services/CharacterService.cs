@@ -23,6 +23,9 @@ namespace BLL.Services
         private readonly IZPGRepository<EnemyInventory> _enemyInventoryRepository;
         private readonly IZPGRepository<EnemyItem> _enemyItemRepository;
         private CreateEnemyModel enemy;
+        private ICollection<EnemyItem> enemyInventory;
+        private bool enemyLooted = true;
+        private int _characterId;
         public CharacterService()
         {
             _characterRepository = new CharacterRepository(_context);
@@ -191,20 +194,23 @@ namespace BLL.Services
 
             return characterId;
         }
-        public string CheckSituation(CreateCharacterModel character)
+        public string CheckSituation(CreateCharacterModel character, ICollection<CharacterItem> charInventory)
         {
-            if (!character.isFighting && character.HP > 1)
+            if (!character.isFighting && character.HP > 1 && enemyLooted)
                 return Walk(character);
             else if (character.isFighting)
                 return Fight(character);
+            else if (!character.isFighting && !enemyLooted)
+                return Loot(character, charInventory);
             else if (!character.isFighting && character.HP == 1)
-                return GoToCity();
-            else return Die();
+                return GoToCity(character);
+
+            else return Die(character);
         }
 
-        public string Die()
+        public string Die(CreateCharacterModel character)
         {
-            return "You Died";
+            return character.Name+" Died";
         }
 
         public bool Explore()
@@ -220,16 +226,16 @@ namespace BLL.Services
                 if (enemy.HP <= 0 && character.HP > 0)
                 {
                     character.Exp += enemy.ExpGained;
-                    return "You killed " + enemy.Name;
+                    return character.Name+" killed " + enemy.Name;
                 }
-                return Die();
+                return Die(character);
             }
             Random random = new Random();
             CreateCharacterSkills skills = new CreateCharacterSkills();
             CreateCharacterStats stats = new CreateCharacterStats();
-            int characterId = SetCharacter(character, skills, stats);
-            var charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == characterId).CharacterItems;
+            _characterId = SetCharacter(character, skills, stats);
             int WeaponId = 0;
+            var charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == _characterId).CharacterItems;
             foreach (var item in charInventory)
                 if (item.ItemOf.TypeOfItem == typeOfItem.Weapon && item.ItemOf.isDressed == true)
                     WeaponId = item.ItemId;
@@ -238,27 +244,57 @@ namespace BLL.Services
             
             
             int charInit = random.Next(character.Intitiative, 11);
-            int charHit = random.Next(skills.SleightOfHand + stats.Strength + charWeapon.equipmentBonus);
+            int charHit = random.Next((skills.SleightOfHand + stats.Strength)*2 + charWeapon.equipmentBonus+character.Speed/9);
+            int charArm = random.Next(character.ArmorClass/3);
             int enemInit = random.Next(enemy.Intitiative, 11);
-            int enemyHit = random.Next((enemy.HPMax + enemy.HP) / 4);
+            int enemyHit = random.Next((enemy.HPMax + enemy.HP) / 4 + enemy.Speed/9);
+            int enemyArm = random.Next(enemy.ArmorClass);
 
-            
-            
+
+
             if (charInit < enemInit)
             {
-                character.HP -= enemyHit;
-                return enemy.Name + " hit you by " + enemyHit.ToString();
+
+                if (enemyHit > charArm)
+                {
+                    character.HP -= enemyHit;
+                    return enemy.Name + " hit "+ character.Name + " by " + enemyHit.ToString();
+                }
+                else return enemy.Name + " tryed to attack but "+ character.Name + "'s determination is stronger";
             }
             else
             {
-                enemy.HP -= charHit;
-                return "You hit " + enemy.Name + " by " + charHit.ToString();
+                if (charHit > enemyArm)
+                {
+                    enemy.HP -= charHit;
+                    return character.Name+" hit " + enemy.Name + " by " + charHit.ToString();
+                }
+                else return character.Name+" just started to attack and his " + charWeapon.Name + " flew out of hand"; 
             }
             
 
             /*if (character.HP > 0)
                 return Walk();
             else return Die();*/
+        }
+        public string Loot(CreateCharacterModel character, ICollection<CharacterItem> charInventory)
+        {
+            List<string> lootedThings = new List<string>();
+            foreach (var item in enemyInventory)
+            {
+                _characterItemRepository.Add(new CharacterItem()
+                {
+                    ItemId = item.ItemId,
+                    InventoryId = _characterId
+                });
+                lootedThings.Add(item.ItemOf.Name);
+
+            }
+            string returnString = character.Name + " looted from " + enemy.Name + ":";
+            enemyLooted = true;
+            foreach (var i in lootedThings)
+                returnString +=( " " + i);
+            return returnString;
         }
 
         public bool Pick()
@@ -289,13 +325,13 @@ namespace BLL.Services
         public string Walk(CreateCharacterModel character)
         {
             Random random = new Random();
-            int enemyId = random.Next(_EnemyRepository.Get().Last().Id);
+            int enemyId = random.Next(_EnemyRepository.Get().Last().Id+1);
             if (enemyId == 2)
                 enemyId--;
             if (enemyId == 0)
                 enemyId++;
             var EnemyTemp = _EnemyRepository.Get().FirstOrDefault(u => u.Id == enemyId);
-            
+            enemyInventory = _enemyInventoryRepository.Get().FirstOrDefault(u => u.Id == enemyId).EnemyItems;
             enemy = new CreateEnemyModel()
             {
                 ArmorClass = EnemyTemp.ArmorClass,
@@ -307,13 +343,14 @@ namespace BLL.Services
                 IsBoss = EnemyTemp.IsBoss,
                 Speed = EnemyTemp.Speed
             };
+            enemyLooted = false;
             character.isFighting = true;
-            return "You meet " + enemy.Name + " and he look realy agressive";
+            return character.Name+" meet " + enemy.Name + " and he look realy agressive";
         }
 
-        public string GoToCity()
+        public string GoToCity(CreateCharacterModel character)
         {
-            return "You Go To City";
+            return character.Name + " Going To City";
         }
 
         

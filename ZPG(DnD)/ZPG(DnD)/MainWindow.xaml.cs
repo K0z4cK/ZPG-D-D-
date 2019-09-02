@@ -36,6 +36,8 @@ namespace ZPG_DnD_
         private readonly IZPGRepository<CharacterItem> _characterItemRepository;
         private DispatcherTimer timer;
         private CreateCharacterModel _character;
+        private ICollection<CharacterItem> _charInventory;
+        private int _characterId;
         public MainWindow(CreateCharacterModel character, string username)
         {
             _character = character;
@@ -50,7 +52,10 @@ namespace ZPG_DnD_
             CreateCharacterStats stats = new CreateCharacterStats();
 
             int characterId = _characterService.SetCharacter(character, skills, stats);
+            _characterId = characterId;
             var charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == characterId).CharacterItems;
+
+            _charInventory = charInventory;
 
             //this.DataContext = character;
             userName.Text = username;
@@ -91,8 +96,8 @@ namespace ZPG_DnD_
 
             });*/
             //LVinventory.Items.Add(_inventoryRepository.Get().FirstOrDefault(u => u.Id == characterId).CharacterItems.FirstOrDefault().ItemOf.Name);
-            setEquipment(charInventory, characterId);
-            setInventory(charInventory);
+            setEquipment();
+            setInventory();
 
             //таймер
             timer = new DispatcherTimer();
@@ -107,23 +112,27 @@ namespace ZPG_DnD_
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            string situation = _characterService.CheckSituation(_character);
+            _charInventory = null;
+            _charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == _characterId).CharacterItems;
+            string situation = _characterService.CheckSituation(_character, _charInventory);
             Log.Items.Add(situation);
             healthPoints.Text = _character.HP.ToString() + "/" + _character.HPMax.ToString();
-
+            setEquipment();
+            setInventory();
             //if (_character.HP <= 0)
-            if (situation == "You Died")
+            if (situation == _character.Name+" Died")
                 timer.Stop();
         }
 
-        public void setInventory(ICollection<CharacterItem> charInventory)
+        public void setInventory()
         {
-            foreach (var item in charInventory)
+            LVinventory.Items.Clear();
+            foreach (var item in _charInventory)
             {
                 int numOfItems = 0;
                 bool isAlreadyPresent = false;
 
-                foreach (var i in charInventory)
+                foreach (var i in _charInventory)
                     if (i.ItemId == item.ItemId)
                         numOfItems++;
 
@@ -135,15 +144,15 @@ namespace ZPG_DnD_
                     LVinventory.Items.Add(item.ItemOf.Name + "   x" + numOfItems.ToString());
             }
         }
-        public void setEquipment(ICollection<CharacterItem> charInventory, int inventoryID)
+        public void setEquipment()
         {
-            foreach (var item in charInventory)
+            foreach (var item in _charInventory)
             {
                 if (item.ItemOf.TypeOfItem != typeOfItem.Trash)
                 {
                     bool isNeedToWear = true;
                     typeOfItem type = item.ItemOf.TypeOfItem;
-                    foreach (var i in charInventory)
+                    foreach (var i in _charInventory)
                         if (i.ItemOf.TypeOfItem == type && i.ItemOf.isDressed == true)
                             isNeedToWear = false;
                     if (isNeedToWear)
@@ -200,7 +209,7 @@ namespace ZPG_DnD_
                 }
             }
             //InventoryReset(inventoryID, charInventory);
-            _inventoryRepository.Edit(inventoryID, new CharacterInventory() { CharacterItems = charInventory, Id = inventoryID });
+            _inventoryRepository.Edit(_characterId, new CharacterInventory() { CharacterItems = _charInventory, Id = _characterId });
         }
        /* public bool InventoryReset(int id, ICollection<CharacterItem> elem)
         {
