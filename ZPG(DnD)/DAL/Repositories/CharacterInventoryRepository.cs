@@ -48,7 +48,6 @@ namespace DAL.Repositories
             {
                 var inventory = _context.CharInventories.FirstOrDefault(t => t.Id == id);
                 inventory.CharacterItems = elem.CharacterItems;
-                inventory.CharacterOf = elem.CharacterOf;
                 _context.SaveChanges();
                 return true;
             }

@@ -62,6 +62,7 @@
     <Compile Include="Models\CreateCharacterSkills.cs" />
     <Compile Include="Models\CreateCharacterStats.cs" />
     <Compile Include="Models\CreateEnemyModel.cs" />
+    <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserRegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

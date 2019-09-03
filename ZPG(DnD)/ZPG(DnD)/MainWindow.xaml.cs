@@ -27,7 +27,7 @@ namespace ZPG_DnD_
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly EFContext _context = new EFContext();
+        EFContext _context = new EFContext();
         private readonly ICharacterService _characterService;
         private readonly IZPGRepository<Character> _characterRepository;
         private readonly IZPGRepository<CharacterSkills> _skillsRepository;
@@ -41,7 +41,7 @@ namespace ZPG_DnD_
         public MainWindow(CreateCharacterModel character, string username)
         {
             _character = character;
-            _characterService = new CharacterService();
+            _characterService = new CharacterService(_context);
             _characterRepository = new CharacterRepository(_context);
             _skillsRepository = new CharacterSkillsRepository(_context);
             _statsRepository = new CharacterStatsRepository(_context);
@@ -107,13 +107,12 @@ namespace ZPG_DnD_
 
             // запуск таймера
             timer.Start();
-            //timer.Enabled = true;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            _charInventory = null;
-            _charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == _characterId).CharacterItems;
+            //_charInventory = null;
+            //_charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == _characterId).CharacterItems;
             string situation = _characterService.CheckSituation(_character, _charInventory);
             Log.Items.Add(situation);
             healthPoints.Text = _character.HP.ToString() + "/" + _character.HPMax.ToString();
@@ -208,14 +207,21 @@ namespace ZPG_DnD_
                         }
                 }
             }
-            //InventoryReset(inventoryID, charInventory);
-            _inventoryRepository.Edit(_characterId, new CharacterInventory() { CharacterItems = _charInventory, Id = _characterId });
+            //_inventoryRepository.Edit(_characterId, new CharacterInventory() { CharacterItems = _charInventory});
         }
        /* public bool InventoryReset(int id, ICollection<CharacterItem> elem)
         {
             try
             {
                 _context.CharInventories.FirstOrDefault(t => t.Id == id).CharacterItems.Clear();
+
+
+
+
+
+
+
+
                 foreach (var item in elem)
                     _context.CharInventories.FirstOrDefault(t => t.Id == id).CharacterItems.(item);
                 _context.SaveChanges();

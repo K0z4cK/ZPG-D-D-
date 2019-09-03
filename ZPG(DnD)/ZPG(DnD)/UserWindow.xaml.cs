@@ -33,7 +33,7 @@ namespace ZPG_DnD_
         public UserWindow(int id)
         {
             _repository = new CharacterRepository(_context);
-            _characterService = new CharacterService();
+            _characterService = new CharacterService(_context);
             _userService = new UserService();
             InitializeComponent();
             _idUser = id;

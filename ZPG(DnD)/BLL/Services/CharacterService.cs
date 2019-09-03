@@ -13,7 +13,6 @@ namespace BLL.Services
 {
     public class CharacterService : ICharacterService
     {
-        private readonly EFContext _context = new EFContext();
         private readonly IZPGRepository<Character> _characterRepository;
         private readonly IZPGRepository<CharacterSkills> _skillsRepository;
         private readonly IZPGRepository<CharacterStats> _statsRepository;
@@ -24,9 +23,10 @@ namespace BLL.Services
         private readonly IZPGRepository<EnemyItem> _enemyItemRepository;
         private CreateEnemyModel enemy;
         private ICollection<EnemyItem> enemyInventory;
+        private ICollection<CharacterItem> _charInventory;
         private bool enemyLooted = true;
         private int _characterId;
-        public CharacterService()
+        public CharacterService(EFContext _context)
         {
             _characterRepository = new CharacterRepository(_context);
             _skillsRepository = new CharacterSkillsRepository(_context);
@@ -196,6 +196,7 @@ namespace BLL.Services
         }
         public string CheckSituation(CreateCharacterModel character, ICollection<CharacterItem> charInventory)
         {
+            _charInventory = charInventory;
             if (!character.isFighting && character.HP > 1 && enemyLooted)
                 return Walk(character);
             else if (character.isFighting)
@@ -235,11 +236,10 @@ namespace BLL.Services
             CreateCharacterStats stats = new CreateCharacterStats();
             _characterId = SetCharacter(character, skills, stats);
             int WeaponId = 0;
-            var charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == _characterId).CharacterItems;
-            foreach (var item in charInventory)
+            foreach (var item in _charInventory)
                 if (item.ItemOf.TypeOfItem == typeOfItem.Weapon && item.ItemOf.isDressed == true)
                     WeaponId = item.ItemId;
-            var charWeapon = charInventory.FirstOrDefault(u => u.ItemId == WeaponId).ItemOf;
+             var charWeapon = _charInventory.FirstOrDefault(u => u.ItemId == WeaponId)?.ItemOf;
             
             
             
@@ -325,7 +325,7 @@ namespace BLL.Services
         public string Walk(CreateCharacterModel character)
         {
             Random random = new Random();
-            int enemyId = random.Next(_EnemyRepository.Get().Last().Id+1);
+            int enemyId = random.Next((_EnemyRepository.Get().Last().Id)+1);
             if (enemyId == 2)
                 enemyId--;
             if (enemyId == 0)
