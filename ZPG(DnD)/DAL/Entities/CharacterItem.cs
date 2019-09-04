@@ -18,6 +18,7 @@ namespace DAL.Entities
 
         [ForeignKey("InventoryOf")]
         public int InventoryId { get; set; }
+        public bool isDressed { get; set; }
 
         public virtual CharacterInventory InventoryOf { get; set; }
 

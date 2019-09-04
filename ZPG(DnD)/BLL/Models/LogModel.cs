@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace BLL.Models
 {
-    class LogModel
+    public class LogModel
     {
         public string returnModel { get; set; }
         public int enemyHP { get; set; }
+        public bool Looted { get; set; }
+        public bool enemyCreated { get; set; }
     }
 }

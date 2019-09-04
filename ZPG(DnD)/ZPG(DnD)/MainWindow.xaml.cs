@@ -113,13 +113,17 @@ namespace ZPG_DnD_
         {
             //_charInventory = null;
             //_charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == _characterId).CharacterItems;
-            string situation = _characterService.CheckSituation(_character, _charInventory);
-            Log.Items.Add(situation);
+            LogModel situation = _characterService.CheckSituation(_character, _charInventory);
+            Log.Items.Add(situation.returnModel);
             healthPoints.Text = _character.HP.ToString() + "/" + _character.HPMax.ToString();
-            setEquipment();
-            setInventory();
+            experiencePt.Text = _character.Exp.ToString();
+            if (situation.Looted)
+            {
+                setEquipment();
+                setInventory();
+            }
             //if (_character.HP <= 0)
-            if (situation == _character.Name+" Died")
+            if (situation.returnModel == _character.Name + " Died")
                 timer.Stop();
         }
 
@@ -139,7 +143,7 @@ namespace ZPG_DnD_
                     if (i.ToString() == item.ItemOf.Name + "   x" + numOfItems.ToString())
                         isAlreadyPresent = true;
 
-                if (!isAlreadyPresent && !item.ItemOf.isDressed)
+                if (!isAlreadyPresent && !item.isDressed)
                     LVinventory.Items.Add(item.ItemOf.Name + "   x" + numOfItems.ToString());
             }
         }
@@ -152,7 +156,7 @@ namespace ZPG_DnD_
                     bool isNeedToWear = true;
                     typeOfItem type = item.ItemOf.TypeOfItem;
                     foreach (var i in _charInventory)
-                        if (i.ItemOf.TypeOfItem == type && i.ItemOf.isDressed == true)
+                        if (i.ItemOf.TypeOfItem == type && i.isDressed == true)
                             isNeedToWear = false;
                     if (isNeedToWear)
                     {
@@ -179,9 +183,9 @@ namespace ZPG_DnD_
                             default:
                                 break;
                         }
-                        item.ItemOf.isDressed = true;
+                        item.isDressed = true;
                     }
-                    else if (item.ItemOf.isDressed == true)
+                    else if (item.isDressed == true)
                         switch (type)
                         {
                             case typeOfItem.Helmet:
@@ -207,7 +211,8 @@ namespace ZPG_DnD_
                         }
                 }
             }
-            //_inventoryRepository.Edit(_characterId, new CharacterInventory() { CharacterItems = _charInventory});
+            
+            _inventoryRepository.Edit(_characterId, new CharacterInventory() { CharacterItems = _charInventory});
         }
        /* public bool InventoryReset(int id, ICollection<CharacterItem> elem)
         {

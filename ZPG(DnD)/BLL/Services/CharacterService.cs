@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -24,6 +25,7 @@ namespace BLL.Services
         private CreateEnemyModel enemy;
         private ICollection<EnemyItem> enemyInventory;
         private ICollection<CharacterItem> _charInventory;
+        private LogModel logModel = new LogModel();
         private bool enemyLooted = true;
         private int _characterId;
         public CharacterService(EFContext _context)
@@ -194,7 +196,7 @@ namespace BLL.Services
 
             return characterId;
         }
-        public string CheckSituation(CreateCharacterModel character, ICollection<CharacterItem> charInventory)
+        public LogModel CheckSituation(CreateCharacterModel character, ICollection<CharacterItem> charInventory)
         {
             _charInventory = charInventory;
             if (!character.isFighting && character.HP > 1 && enemyLooted)
@@ -209,9 +211,13 @@ namespace BLL.Services
             else return Die(character);
         }
 
-        public string Die(CreateCharacterModel character)
+        public LogModel Die(CreateCharacterModel character)
         {
-            return character.Name+" Died";
+            logModel.enemyHP = enemy.HP;
+            logModel.Looted = false;
+            logModel.enemyCreated = false;
+            logModel.returnModel = character.Name + " Died";
+            return logModel;
         }
 
         public bool Explore()
@@ -219,15 +225,20 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public string Fight(CreateCharacterModel character)
+        public LogModel Fight(CreateCharacterModel character)
         {
+            logModel.enemyHP = enemy.HP;
+            logModel.Looted = false;
+            logModel.enemyCreated = false;
+
             if (character.HP <= 0 || enemy.HP <= 0)
             {
                 character.isFighting = false;
                 if (enemy.HP <= 0 && character.HP > 0)
                 {
                     character.Exp += enemy.ExpGained;
-                    return character.Name+" killed " + enemy.Name;
+                    logModel.returnModel = character.Name+" killed " + enemy.Name;
+                    return logModel;
                 }
                 return Die(character);
             }
@@ -237,20 +248,21 @@ namespace BLL.Services
             _characterId = SetCharacter(character, skills, stats);
             int WeaponId = 0;
             foreach (var item in _charInventory)
-                if (item.ItemOf.TypeOfItem == typeOfItem.Weapon && item.ItemOf.isDressed == true)
+                if (item.ItemOf.TypeOfItem == typeOfItem.Weapon && item.isDressed == true)
                     WeaponId = item.ItemId;
              var charWeapon = _charInventory.FirstOrDefault(u => u.ItemId == WeaponId)?.ItemOf;
             
             
-            
+            // change strength and another, to more stuff
             int charInit = random.Next(character.Intitiative, 11);
-            int charHit = random.Next((skills.SleightOfHand + stats.Strength)*2 + charWeapon.equipmentBonus+character.Speed/9);
+            int charHit = random.Next((skills.SleightOfHand + stats.Strength)*2 + charWeapon.equipmentBonus + character.Speed/8);
             int charArm = random.Next(character.ArmorClass/3);
             int enemInit = random.Next(enemy.Intitiative, 11);
             int enemyHit = random.Next((enemy.HPMax + enemy.HP) / 4 + enemy.Speed/9);
             int enemyArm = random.Next(enemy.ArmorClass);
 
-
+            
+            
 
             if (charInit < enemInit)
             {
@@ -258,26 +270,26 @@ namespace BLL.Services
                 if (enemyHit > charArm)
                 {
                     character.HP -= enemyHit;
-                    return enemy.Name + " hit "+ character.Name + " by " + enemyHit.ToString();
+                    logModel.returnModel = enemy.Name + " hit " + character.Name + " by " + enemyHit.ToString();
                 }
-                else return enemy.Name + " tryed to attack but "+ character.Name + "'s determination is stronger";
+                else logModel.returnModel = enemy.Name + " tryed to attack but "+ character.Name + "'s determination is stronger";
             }
             else
             {
                 if (charHit > enemyArm)
                 {
                     enemy.HP -= charHit;
-                    return character.Name+" hit " + enemy.Name + " by " + charHit.ToString();
+                    logModel.returnModel = character.Name+" hit " + enemy.Name + " by " + charHit.ToString();
                 }
-                else return character.Name+" just started to attack and his " + charWeapon.Name + " flew out of hand"; 
+                else logModel.returnModel = character.Name+" just started to attack and his " + charWeapon.Name + " flew out of hand"; 
             }
-            
+            return logModel;
 
             /*if (character.HP > 0)
                 return Walk();
             else return Die();*/
         }
-        public string Loot(CreateCharacterModel character, ICollection<CharacterItem> charInventory)
+        public LogModel Loot(CreateCharacterModel character, ICollection<CharacterItem> charInventory)
         {
             List<string> lootedThings = new List<string>();
             foreach (var item in enemyInventory)
@@ -294,10 +306,16 @@ namespace BLL.Services
             enemyLooted = true;
             foreach (var i in lootedThings)
                 returnString +=( " " + i);
-            return returnString;
+
+            logModel.enemyHP = enemy.HP;
+            logModel.Looted = true;
+            logModel.enemyCreated = false;
+            logModel.returnModel = returnString;
+
+            return logModel;
         }
 
-        public bool Pick()
+        public LogModel Pick()
         {
             throw new NotImplementedException();
         }
@@ -322,7 +340,7 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public string Walk(CreateCharacterModel character)
+        public LogModel Walk(CreateCharacterModel character)
         {
             Random random = new Random();
             int enemyId = random.Next((_EnemyRepository.Get().Last().Id)+1);
@@ -345,12 +363,22 @@ namespace BLL.Services
             };
             enemyLooted = false;
             character.isFighting = true;
-            return character.Name+" meet " + enemy.Name + " and he look realy agressive";
+
+            logModel.enemyHP = enemy.HP;
+            logModel.Looted = false;
+            logModel.enemyCreated = true;
+            logModel.returnModel = character.Name + " meet " + enemy.Name + " and he look realy agressive";
+
+            return logModel;
         }
 
-        public string GoToCity(CreateCharacterModel character)
+        public LogModel GoToCity(CreateCharacterModel character)
         {
-            return character.Name + " Going To City";
+            logModel.enemyHP = enemy.HP;
+            logModel.Looted = false;
+            logModel.enemyCreated = false;
+            logModel.returnModel = character.Name + " Going To City";
+            return logModel;
         }
 
         

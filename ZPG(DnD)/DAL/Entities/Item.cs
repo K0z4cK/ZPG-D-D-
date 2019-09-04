@@ -22,7 +22,6 @@ namespace DAL.Entities
         public typeOfBonus TypeOfBonus { get; set; }
         public int itemBonus { get; set; }
         public int Price { get; set; }
-        public bool isDressed { get; set; }
         public virtual ICollection<CharacterItem> CharacterItems { get; set; }
         public virtual ICollection<EnemyItem> EnemyItems { get; set; }
     }
