@@ -255,8 +255,8 @@ namespace BLL.Services
             
             // change strength and another, to more stuff
             int charInit = random.Next(character.Intitiative, 11);
-            int charHit = random.Next((skills.SleightOfHand + stats.Strength)*2 + charWeapon.equipmentBonus + character.Speed/8);
-            int charArm = random.Next(character.ArmorClass/3);
+            int charHit = random.Next((stats.Strength / skills.SleightOfHand)*3+(skills.SleightOfHand + stats.Strength) + charWeapon.equipmentBonus + character.Speed/9);
+            int charArm = random.Next(character.ArmorClass/3+stats.Constitution);
             int enemInit = random.Next(enemy.Intitiative, 11);
             int enemyHit = random.Next((enemy.HPMax + enemy.HP) / 4 + enemy.Speed/9);
             int enemyArm = random.Next(enemy.ArmorClass);
