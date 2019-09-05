@@ -57,7 +57,7 @@ namespace BLL.Services
         public int Create(CreateCharacterModel character, CreateCharacterStats stats, CreateCharacterSkills skills, int userId)
         {
             Random random = new Random();
-            character.HPMax = random.Next(150);
+            character.HPMax = random.Next(30,150);
             character.HP = character.HPMax;
             character.Intitiative = random.Next(-6, 10);
             character.Speed = random.Next(50);
@@ -305,7 +305,7 @@ namespace BLL.Services
             string returnString = character.Name + " looted from " + enemy.Name + ":";
             enemyLooted = true;
             foreach (var i in lootedThings)
-                returnString +=( " " + i);
+                returnString +=( " " + i+",");
 
             logModel.enemyHP = enemy.HP;
             logModel.Looted = true;

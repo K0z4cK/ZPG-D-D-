@@ -156,10 +156,17 @@ namespace ZPG_DnD_
                     bool isNeedToWear = true;
                     typeOfItem type = item.ItemOf.TypeOfItem;
                     foreach (var i in _charInventory)
+                    {
                         if (i.ItemOf.TypeOfItem == type && i.isDressed == true)
                             isNeedToWear = false;
+                        if (i.ItemOf.TypeOfItem == type && i.isDressed == true && item.isDressed == false && i.ItemOf.equipmentBonus < item.ItemOf.equipmentBonus)
+                            isNeedToWear = true;
+                    }
                     if (isNeedToWear)
                     {
+                        foreach (var i in _charInventory)
+                            if (i.ItemOf.TypeOfItem == type && i.isDressed == true)
+                                i.isDressed = false;
                         switch (type)
                         {
                             case typeOfItem.Helmet:
@@ -184,6 +191,7 @@ namespace ZPG_DnD_
                                 break;
                         }
                         item.isDressed = true;
+
                     }
                     else if (item.isDressed == true)
                         switch (type)
