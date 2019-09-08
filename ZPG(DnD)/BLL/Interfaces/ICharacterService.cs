@@ -21,7 +21,7 @@ namespace BLL.Interfaces
         bool Explore();
         LogModel Fight(CreateCharacterModel character);
         LogModel Loot(CreateCharacterModel character, ICollection<CharacterItem> charInventory);
-        bool TryToSpeak();
+        LogModel TryToSpeak(CreateCharacterModel character, CreateCharacterSkills skills, CreateCharacterStats stats);
         bool Pray();
         bool Steal();
         bool Sneak();

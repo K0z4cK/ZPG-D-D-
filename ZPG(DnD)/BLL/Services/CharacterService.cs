@@ -67,22 +67,22 @@ namespace BLL.Services
             character.Exp = 0;
             character.isFighting = false;
 
-            stats.Charisma = random.Next(-4, 6);
-            stats.Constitution = random.Next(-4, 6);
-            stats.Dexterity = random.Next(-4, 6);
-            stats.Intelligence = random.Next(-4, 6);
-            stats.Strength = random.Next(-4, 6);
-            stats.Wisdom = random.Next(-4, 6);
+            stats.Charisma = random.Next(-4, 7);
+            stats.Constitution = random.Next(-4, 7);
+            stats.Dexterity = random.Next(-4, 7);
+            stats.Intelligence = random.Next(-4, 7);
+            stats.Strength = random.Next(-4, 7);
+            stats.Wisdom = random.Next(-4, 7);
 
-            skills.Acrobatics = random.Next(-2, 4);
-            skills.AnimalHandling = random.Next(-2, 4);
-            skills.Athletics = random.Next(-2, 4);
-            skills.Medicine = random.Next(-2, 4);
-            skills.Persuasion = random.Next(-2, 4);
-            skills.Religion = random.Next(-2, 4);
-            skills.SleightOfHand = random.Next(-2, 4);
-            skills.Stealth = random.Next(-2, 4);
-            skills.Survival = random.Next(-2, 4);
+            skills.Acrobatics = random.Next(-2, 5);
+            skills.AnimalHandling = random.Next(-2, 5);
+            skills.Athletics = random.Next(-2, 5);
+            skills.Medicine = random.Next(-2, 5);
+            skills.Persuasion = random.Next(-2, 5);
+            skills.Religion = random.Next(-2, 5);
+            skills.SleightOfHand = random.Next(-2, 5);
+            skills.Stealth = random.Next(-2, 5);
+            skills.Survival = random.Next(-2, 5);
 
             _characterRepository.Add(new Character()
             {
@@ -251,22 +251,38 @@ namespace BLL.Services
                 if (item.ItemOf.TypeOfItem == typeOfItem.Weapon && item.isDressed == true)
                     WeaponId = item.ItemId;
              var charWeapon = _charInventory.FirstOrDefault(u => u.ItemId == WeaponId)?.ItemOf;
-            
+
+            int charPower = skills.SleightOfHand * 2 + stats.Strength;
+            if (charPower <= 0)
+                charPower = 1;
+
+            int charEloquence = skills.Persuasion * 2 + stats.Charisma;
+            if (charEloquence <= 0)
+                charEloquence = 1;
+
+            int sleightOfHand = random.Next(charPower);
+            int persuasion = random.Next(charEloquence);
+           
             
             // change strength and another, to more stuff
             int charInit = random.Next(character.Intitiative, 11);
-            int charHit = random.Next((stats.Strength / skills.SleightOfHand) + (skills.SleightOfHand + stats.Strength) * 3 + charWeapon.equipmentBonus + character.Speed/8);
+            int charHit = (stats.Strength / skills.SleightOfHand) + (skills.SleightOfHand + stats.Strength) * 3 + charWeapon.equipmentBonus + character.Speed / 8;
+            
             int charArm = random.Next(character.ArmorClass/3+stats.Constitution);
             int enemInit = random.Next(enemy.Intitiative, 11);
             int enemyHit = random.Next((enemy.HPMax + enemy.HP) / 4 + enemy.Speed/9);
             int enemyArm = random.Next(enemy.ArmorClass);
 
-            
-            
+            if (charHit <= 0)
+                charHit = 1;
+            else
+                charHit = random.Next(charHit);
+
+
 
             if (charInit < enemInit)
             {
-
+                
                 if (enemyHit > charArm)
                 {
                     character.HP -= enemyHit;
@@ -276,6 +292,8 @@ namespace BLL.Services
             }
             else
             {
+                if (persuasion > sleightOfHand)
+                    return TryToSpeak(character, skills, stats);
                 if (charHit > enemyArm)
                 {
                     enemy.HP -= charHit;
@@ -335,9 +353,26 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public bool TryToSpeak()
+        public LogModel TryToSpeak(CreateCharacterModel character, CreateCharacterSkills skills, CreateCharacterStats stats)
         {
-            throw new NotImplementedException();
+            Random random = new Random();
+
+            logModel.enemyHP = enemy.HP;
+            logModel.Looted = false;
+            logModel.enemyCreated = false;
+            logModel.returnModel = character.Name + " trying to speak with " + enemy.Name + "\n";
+            int charSpeak = random.Next((stats.Charisma / skills.Persuasion) + (skills.Persuasion + stats.Charisma) * 5);
+            int needToSpeak = (stats.Charisma / skills.Persuasion) + (skills.Persuasion + stats.Charisma) * 4;
+            if (charSpeak >= needToSpeak)
+            {
+                character.isFighting = false;
+                character.Exp += enemy.ExpGained;
+                enemyLooted = true;
+                logModel.returnModel += character.Name + " sayed to " + enemy.Name + " that he don't want to kill somebody, and "+ enemy.Name + " just listen, and go away";
+            }
+            else
+                logModel.returnModel += enemy.Name + " didn't listen to " + character.Name + " and still want to kill him";
+            return logModel;
         }
 
         public LogModel Walk(CreateCharacterModel character)

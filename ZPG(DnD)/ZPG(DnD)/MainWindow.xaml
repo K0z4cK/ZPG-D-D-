@@ -126,7 +126,6 @@
                 <TextBlock x:Name="animalHandling" Text="Animal Handling" FontSize="13.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock x:Name="athletics" Text="Athletics" FontSize="13.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock x:Name="medicine" Text="Medicine" FontSize="13.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock x:Name="performance" Text="Performance" FontSize="13.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock x:Name="persuasion" Text="Persuasion" FontSize="13.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock x:Name="religion" Text="Religion" FontSize="13.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock x:Name="sleightOfHand" Text="Sleight Of Hand" FontSize="13.55" HorizontalAlignment="Center" VerticalAlignment="Center"/>
