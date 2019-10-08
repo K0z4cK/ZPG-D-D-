@@ -23,6 +23,8 @@
             <ColumnDefinition Width="4"/>
             <ColumnDefinition Width="11"/>
             <ColumnDefinition Width="35"/>
+            <ColumnDefinition Width="387*"/>
+            <ColumnDefinition Width="200*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -37,90 +39,91 @@
             <RowDefinition Height="66*"/>
             <RowDefinition Height="67*"/>
             <RowDefinition Height="65*"/>
-            <RowDefinition Height="42*"/>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="23*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" BorderThickness="2" BorderBrush="Black" Grid.RowSpan="2">
+        <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="6" BorderThickness="2" BorderBrush="Black" Grid.RowSpan="2" Margin="1,0,3,0">
             <TextBlock x:Name="characterName" Text="Name" FontSize="38" FontFamily="Wide Latin"  />
         </Border>
-        <TextBlock x:Name="classNlevel" Text="Name" FontSize="16" Grid.Column="7" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="4,0,0,0" Height="21" Grid.Row="1"/>
-        <TextBlock Text="CLASS/LEVEL" FontSize="12" Grid.Row="3" Grid.Column="7" VerticalAlignment="Top" Margin="4,0,0,0" Height="16"/>
-        <TextBlock x:Name="background" Text="Name" FontSize="16" Grid.Column="8" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21" Grid.Row="1"/>
-        <TextBlock Text="BACKGROUND" FontSize="12" Grid.Row="3" Grid.Column="8" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
-        <TextBlock x:Name="userName"  Text="Name" FontSize="16" Grid.Column="9" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21" Grid.Row="1"/>
-        <TextBlock Text="USER NAME" FontSize="12" Grid.Row="3" Grid.Column="9" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
+        <TextBlock x:Name="classNlevel" Text="Name" FontSize="16" Grid.Column="7" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="11,0,121,0" Height="21" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <TextBlock Text="CLASS/LEVEL" FontSize="12" Grid.Row="3" Grid.Column="7" VerticalAlignment="Top" Margin="11,0,121,0" Height="16" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="background" Text="Name" FontSize="16" Grid.Column="8" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="18,0,118,0" Height="21" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <TextBlock Text="BACKGROUND" FontSize="12" Grid.Row="3" Grid.Column="8" VerticalAlignment="Top" Margin="18,0,118,0" Height="16" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="userName"  Text="Name" FontSize="16" Grid.Column="9" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="19,0,0,0" Height="21" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <TextBlock Text="USER NAME" FontSize="12" Grid.Row="3" Grid.Column="9" VerticalAlignment="Top" Margin="19,0,0,0" Height="16" Grid.ColumnSpan="2"/>
 
-        <TextBlock x:Name="race" Text="Name" FontSize="16" Grid.Column="7" Grid.Row="3" VerticalAlignment="Bottom" Margin="4,0,0,0" Height="21"/>
-        <TextBlock Text="RACE" FontSize="12" Grid.Row="4" Grid.Column="7" VerticalAlignment="Top" Margin="4,0,0,0" Height="16"/>
-        <TextBlock x:Name="aligment" Text="Name" FontSize="16" Grid.Column="8" Grid.Row="3" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21"/>
-        <TextBlock Text="ALIGMENT" FontSize="12" Grid.Row="4" Grid.Column="8" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
-        <TextBlock x:Name="experiencePt" Text="Name" FontSize="16" Grid.Column="9" Grid.Row="3" VerticalAlignment="Bottom" Margin="10,0,0,0" Height="21"/>
-        <TextBlock Text="EXPERIENCE POINTS" FontSize="12" Grid.Row="4" Grid.Column="9" VerticalAlignment="Top" Margin="10,0,0,0" Height="16"/>
+        <TextBlock x:Name="race" Text="Name" FontSize="16" Grid.Column="7" Grid.Row="3" VerticalAlignment="Bottom" Margin="11,0,121,0" Height="21" Grid.ColumnSpan="2"/>
+        <TextBlock Text="RACE" FontSize="12" Grid.Row="4" Grid.Column="7" VerticalAlignment="Top" Margin="11,0,121,0" Height="16" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="aligment" Text="Name" FontSize="16" Grid.Column="8" Grid.Row="3" VerticalAlignment="Bottom" Margin="18,0,118,0" Height="21" Grid.ColumnSpan="2"/>
+        <TextBlock Text="ALIGMENT" FontSize="12" Grid.Row="4" Grid.Column="8" VerticalAlignment="Top" Margin="18,0,118,0" Height="16" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="experiencePt" Text="Name" FontSize="16" Grid.Column="9" Grid.Row="3" VerticalAlignment="Bottom" Margin="19,0,0,0" Height="21" Grid.ColumnSpan="2"/>
+        <TextBlock Text="EXPERIENCE POINTS" FontSize="12" Grid.Row="4" Grid.Column="9" VerticalAlignment="Top" Margin="19,0,0,0" Height="16" Grid.ColumnSpan="2"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="5" Text="STRENGTH" FontSize="14" HorizontalAlignment="Center" Margin="12,0,10,45" FontWeight="DemiBold" Width="70"/>
-        <Border Grid.Column="1" Grid.Row="5" BorderThickness="1" BorderBrush="Black">
+        <TextBlock Grid.Column="1" Grid.Row="5" Text="STRENGTH" FontSize="14" HorizontalAlignment="Center" Margin="13,0,8,45" FontWeight="DemiBold" Width="70"/>
+        <Border Grid.Column="1" Grid.Row="5" BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Margin="1,0,7,0">
             <TextBlock x:Name="strengthNum" Text="Num" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="22,33,23,9"/>
         </Border>
-        <TextBlock Grid.Column="1" Grid.Row="6" Text="DEXTERITY" FontSize="14" HorizontalAlignment="Center" Margin="12,0,10,45" FontWeight="DemiBold" Width="70"/>
-        <Border Grid.Column="1" Grid.Row="6" BorderThickness="1" BorderBrush="Black">
+        <TextBlock Grid.Column="1" Grid.Row="6" Text="DEXTERITY" FontSize="14" HorizontalAlignment="Center" Margin="13,0,8,45" FontWeight="DemiBold" Width="70"/>
+        <Border Grid.Column="1" Grid.Row="6" BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Margin="1,0,7,0">
             <TextBlock x:Name="dexterityNum" Text="Num" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="22,33,23,9"/>
         </Border>
-        <TextBlock Grid.Column="1" Grid.Row="7" Text="CONSTITUTION" FontSize="12" HorizontalAlignment="Center" Margin="4,0,2,45" FontWeight="DemiBold" Width="86" Grid.RowSpan="2"/>
-        <Border Grid.Column="1" Grid.Row="7" BorderThickness="1" BorderBrush="Black" Grid.RowSpan="2">
+        <TextBlock Grid.Column="1" Grid.Row="7" Text="CONSTITUTION" FontSize="12" HorizontalAlignment="Center" Margin="5,0,0,45" FontWeight="DemiBold" Width="86" Grid.RowSpan="2"/>
+        <Border Grid.Column="1" Grid.Row="7" BorderThickness="1" BorderBrush="Black" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="1,0,7,0">
             <TextBlock x:Name="constitutionNum" Text="Num" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="22,33,23,9"/>
         </Border>
-        <TextBlock Grid.Column="1" Grid.Row="9" Text="INTELLIGENCE" FontSize="12" HorizontalAlignment="Center" Margin="8,0,6,45" FontWeight="DemiBold" Width="78"/>
-        <Border Grid.Column="1" Grid.Row="9" BorderThickness="1" BorderBrush="Black">
+        <TextBlock Grid.Column="1" Grid.Row="9" Text="INTELLIGENCE" FontSize="12" HorizontalAlignment="Center" Margin="9,0,4,45" FontWeight="DemiBold" Width="78"/>
+        <Border Grid.Column="1" Grid.Row="9" BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Margin="1,0,7,0">
             <TextBlock x:Name="intelligenceNum" Text="Num" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="22,33,23,9"/>
         </Border>
-        <TextBlock Grid.Column="1" Grid.Row="10" Text="WISDOM" FontSize="14" HorizontalAlignment="Center" Margin="18,0,16,45" FontWeight="DemiBold" Width="58"/>
-        <Border Grid.Column="1" Grid.Row="10" BorderThickness="1" BorderBrush="Black">
+        <TextBlock Grid.Column="1" Grid.Row="10" Text="WISDOM" FontSize="14" HorizontalAlignment="Center" Margin="19,0,14,45" FontWeight="DemiBold" Width="58"/>
+        <Border Grid.Column="1" Grid.Row="10" BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Margin="1,0,7,0">
             <TextBlock x:Name="wisdomNum" Text="Num" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="22,33,23,9"/>
         </Border>
-        <TextBlock Grid.Column="1" Grid.Row="11" Text="CHARISMA" FontSize="14" HorizontalAlignment="Center" Margin="10,0,10,45" FontWeight="DemiBold" Width="72"/>
-        <Border Grid.Column="1" Grid.Row="11" BorderThickness="1" BorderBrush="Black">
+        <TextBlock Grid.Column="1" Grid.Row="11" Text="CHARISMA" FontSize="14" HorizontalAlignment="Center" Margin="11,0,8,45" FontWeight="DemiBold" Width="72"/>
+        <Border Grid.Column="1" Grid.Row="11" BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Margin="1,0,7,0">
             <TextBlock x:Name="charismaNum" Text="Num" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="22,33,23,9"/>
         </Border>
 
-        <TextBlock Grid.Column="3" Grid.Row="5" Text="ARMOR" FontSize="14" HorizontalAlignment="Center" Margin="16,32,16,0" FontWeight="DemiBold" Width="52"/>
-        <TextBlock Grid.Column="3" Grid.Row="5" Text="CLASS" FontSize="14" HorizontalAlignment="Center" Margin="22,44,22,0" FontWeight="DemiBold" Width="40"/>
-        <Border Grid.Column="3" Grid.Row="5" BorderThickness="1" BorderBrush="Black" Height="66" VerticalAlignment="Top">
+        <TextBlock Grid.Column="3" Grid.Row="5" Text="ARMOR" FontSize="14" HorizontalAlignment="Center" Margin="19,32,12,0" FontWeight="DemiBold" Width="52"/>
+        <TextBlock Grid.Column="3" Grid.Row="5" Text="CLASS" FontSize="14" HorizontalAlignment="Center" Margin="25,44,18,0" FontWeight="DemiBold" Width="40"/>
+        <Border Grid.Column="3" Grid.Row="5" BorderThickness="1" BorderBrush="Black" Height="66" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="3,0,79,0">
             <TextBlock x:Name="armorClassNum" Text="Name" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="23,9,23,34"/>
         </Border>
-        <TextBlock Grid.Column="4" Grid.Row="5" Text="INTITIATIVE" FontSize="12" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Margin="6,40,6,10" Width="72" />
-        <Border Grid.Column="4" Grid.Row="5" BorderThickness="1" BorderBrush="Black" Height="66" VerticalAlignment="Top">
+        <TextBlock Grid.Column="4" Grid.Row="5" Text="INTITIATIVE" FontSize="12" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Margin="10,40,1,10" Width="72" />
+        <Border Grid.Column="4" Grid.Row="5" BorderThickness="1" BorderBrush="Black" Height="66" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="4,0,77,0">
             <TextBlock x:Name="initiativeNum" Text="Name" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="23,9,23,34"/>
         </Border>
-        <TextBlock Grid.Column="5" Grid.Row="5" Text="SPEED" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="64" Margin="10,38,9,0" />
-        <Border Grid.Column="5" Grid.Row="5" BorderThickness="1" BorderBrush="Black" Height="66" VerticalAlignment="Top">
+        <TextBlock Grid.Column="5" Grid.Row="5" Text="SPEED" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="64" Margin="15,38,3,0" />
+        <Border Grid.Column="5" Grid.Row="5" BorderThickness="1" BorderBrush="Black" Height="66" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="5,0,3,0">
             <TextBlock x:Name="speedNum" Text="Name" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="23,9,23,34"/>
         </Border>
 
-        <TextBlock Grid.Column="4" Grid.Row="6" Text="HP" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="64" Margin="10,0"  />
-        <Border Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="6" BorderThickness="1" BorderBrush="Black" Height="35" VerticalAlignment="Top" Margin="0,20,0,0">
+        <TextBlock Grid.Column="4" Grid.Row="6" Text="HP" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="64" Margin="14,0,5,0"  />
+        <Border Grid.Column="3" Grid.ColumnSpan="4" Grid.Row="6" BorderThickness="1" BorderBrush="Black" Height="35" VerticalAlignment="Top" Margin="3,20,3,0">
             <TextBlock x:Name="healthPoints" Text="Name" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Border>
 
-        <TextBlock Grid.Column="7" Grid.Row="5" Text="Equipment" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="78" Margin="7,0,1,0"  />
-        <Border Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="5" Grid.RowSpan="2" BorderThickness="1" BorderBrush="Black" Height="102" VerticalAlignment="Top" Margin="0,20,0,0">
+        <TextBlock Grid.Column="7" Grid.Row="5" Text="Equipment" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="78" Margin="14,0,122,0" Grid.ColumnSpan="2"  />
+        <Border Grid.Column="7" Grid.ColumnSpan="4" Grid.Row="5" Grid.RowSpan="2" BorderThickness="1" BorderBrush="Black" Height="102" VerticalAlignment="Top" Margin="7,20,0,0">
         </Border>
-        <TextBlock x:Name="armor" Text="Armor:" Grid.Column="7"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,24,0,26" Grid.ColumnSpan="2" Width="143" Height="16"  />
-        <TextBlock x:Name="weapon" Text="Weapon:" Grid.Column="8"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,24,10,26" Grid.ColumnSpan="2" Width="168" Height="16"  />
-        <TextBlock x:Name="head" Text="Head:" Grid.Column="7"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,65,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2" Width="154" Height="16" />
-        <TextBlock x:Name="amulet" Text="Amulet:" Grid.Column="7"  Grid.Row="6"  FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,28,0,21" Grid.ColumnSpan="2" Width="161" Height="16" />
-        <TextBlock x:Name="gloves" Text="Gloves:" Grid.Column="8"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,65,10,0" Grid.RowSpan="2" Grid.ColumnSpan="2" Width="168" Height="16" />
-        <TextBlock x:Name="boots" Text="Boots:" Grid.Column="8"  Grid.Row="6"  FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,28,10,21" Grid.ColumnSpan="2" Width="161" Height="16" />
+        <TextBlock x:Name="armor" Text="Armor:" Grid.Column="7"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="11,24,0,26" Grid.ColumnSpan="2" Width="143" Height="16"  />
+        <TextBlock x:Name="weapon" Text="Weapon:" Grid.Column="8"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,24,0,26" Grid.ColumnSpan="2" Width="168" Height="16"  />
+        <TextBlock x:Name="head" Text="Head:" Grid.Column="7"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,65,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2" Width="154" Height="16" />
+        <TextBlock x:Name="amulet" Text="Amulet:" Grid.Column="7"  Grid.Row="6"  FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="11,28,0,21" Grid.ColumnSpan="2" Width="161" Height="16" />
+        <TextBlock x:Name="gloves" Text="Gloves:" Grid.Column="8"  Grid.Row="5"  FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,65,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2" Width="168" Height="16" />
+        <TextBlock x:Name="boots" Text="Boots:" Grid.Column="8"  Grid.Row="6"  FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,28,0,21" Grid.ColumnSpan="2" Width="161" Height="16" />
 
 
 
-        <TextBlock Grid.Column="4" Grid.Row="7" Text="Inventory" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="72" Margin="6,0" Grid.RowSpan="2"  />
-        <Border Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="8" Grid.RowSpan="4" BorderThickness="1" BorderBrush="Black" Height="233" VerticalAlignment="Top" Margin="0,12,0,0">
+        <TextBlock Grid.Column="4" Grid.Row="7" Text="Inventory" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="72" Margin="10,0,1,0" Grid.RowSpan="2"  />
+        <Border Grid.Column="3" Grid.ColumnSpan="4" Grid.Row="8" Grid.RowSpan="4" BorderThickness="1" BorderBrush="Black" Height="233" VerticalAlignment="Top" Margin="3,12,3,0">
             <ListView x:Name="LVinventory">
             </ListView>
         </Border>
-        <TextBlock x:Name="coins" Text="Coins: 0" Grid.Column="3" Grid.Row="12" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0,0,0" Height="21" Width="55"  />
+        <TextBlock x:Name="coins" Text="Coins: 0" Grid.Column="3" Grid.Row="12" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,0,0,0" Height="21" Width="55"   />
 
-        <TextBlock Grid.Column="7" Grid.Row="7" Text="Skills" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="80" Margin="5,0,1,0" Grid.RowSpan="2"  />
-        <Border Grid.Column="7" Grid.ColumnSpan="3" Grid.Row="8" Grid.RowSpan="4" BorderThickness="1" BorderBrush="Black" Height="233" VerticalAlignment="Top" Margin="0,12,0,0">
+        <TextBlock Grid.Column="7" Grid.Row="7" Text="Skills" FontSize="16" HorizontalAlignment="Center"  FontWeight="DemiBold" TextAlignment="Center" Width="80" Margin="12,0,122,0" Grid.RowSpan="2" Grid.ColumnSpan="2"  />
+        <Border Grid.Column="7" Grid.ColumnSpan="4" Grid.Row="8" Grid.RowSpan="4" BorderThickness="1" BorderBrush="Black" Height="233" VerticalAlignment="Top" Margin="7,12,0,0">
             <ListView>
                 <TextBlock x:Name="acrobatics" Text="Acrobatics" FontSize="13.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock x:Name="animalHandling" Text="Animal Handling" FontSize="13.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -133,14 +136,22 @@
                 <TextBlock x:Name="survival" Text="Survival" FontSize="13.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </ListView>
         </Border>
-        <Border Background="Black" Grid.Column="11" Grid.RowSpan="13" />
+        <Border Background="Black" Grid.Column="12" Grid.RowSpan="14" Grid.ColumnSpan="2" Margin="7,0,34,0" />
 
-        
 
-        <Border Grid.Row="2" Grid.Column="13" BorderThickness="2" BorderBrush="Black" Grid.RowSpan="10" Margin="0,0,-563,10">
+
+        <Border Grid.Row="3" Grid.Column="13" BorderThickness="2" BorderBrush="Black" Grid.RowSpan="9" Margin="13,10,10,10" Grid.ColumnSpan="3">
             <ListView x:Name="Log">
             </ListView>
         </Border>
+
+        <TextBlock x:Name="enemyName" Grid.Column="14" Grid.Row="0" Text="Enemy HP" FontSize="16" HorizontalAlignment="Right"  FontWeight="DemiBold" TextAlignment="Center" VerticalAlignment="Center" Width="92" Height="22" Margin="0,-2,50,0"  />
+        <Border Grid.Column="14" Grid.Row="1" BorderThickness="1" BorderBrush="Black" Height="35" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.RowSpan="3" Width="200"  >
+            <TextBlock x:Name="enemyHealthPoints" Text="Name" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border >
+        <ProgressBar x:Name="progressBar" Grid.Row="12" Grid.Column="13" Grid.ColumnSpan="3" Height="Auto" >
+        </ProgressBar>
     </Grid>
+
 
 </Window>

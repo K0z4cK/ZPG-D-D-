@@ -113,18 +113,33 @@ namespace ZPG_DnD_
         {
             //_charInventory = null;
             //_charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == _characterId).CharacterItems;
+            
             LogModel situation = _characterService.CheckSituation(_character, _charInventory);
+            //progressBar.Value = 50;
             Log.Items.Add(situation.returnModel);
+            do {
+                progressBar.Value += 20;
+                progressBar.IsIndeterminate = true;
+                Thread.Sleep(1000);
+            } while (progressBar.Value < progressBar.Maximum);
+            progressBar.Value = 0;
+            //progressBar.
+            //Log.ScrollIntoView(Log.Items[Log.Items.Count - 2]);
+            Log.ScrollIntoView(Log.Items[Log.Items.Count - 1]);
+            Log.SelectedItem = Log.Items[Log.Items.Count - 1];
             healthPoints.Text = _character.HP.ToString() + "/" + _character.HPMax.ToString();
+            enemyHealthPoints.Text = situation.enemyHP.ToString() + "/" + situation.enemyMaxHP.ToString();
+            enemyName.Text = situation.enemyName+" HP";
             experiencePt.Text = _character.Exp.ToString();
             if (situation.Looted)
             {
                 setEquipment();
                 setInventory();
             }
-            //if (_character.HP <= 0)
             if (situation.returnModel == _character.Name + " Died")
                 timer.Stop();
+            Log.ScrollIntoView(Log.Items[Log.Items.Count - 1]);
+            Log.ScrollIntoView(Log.Items[Log.Items.Count - 1]);
         }
 
         public void setInventory()

@@ -213,6 +213,8 @@ namespace BLL.Services
 
         public LogModel Die(CreateCharacterModel character)
         {
+            logModel.enemyName = enemy.Name;
+            logModel.enemyMaxHP = enemy.HPMax;
             logModel.enemyHP = enemy.HP;
             logModel.Looted = false;
             logModel.enemyCreated = false;
@@ -227,6 +229,8 @@ namespace BLL.Services
 
         public LogModel Fight(CreateCharacterModel character)
         {
+            logModel.enemyName = enemy.Name;
+            logModel.enemyMaxHP = enemy.HPMax;
             logModel.enemyHP = enemy.HP;
             logModel.Looted = false;
             logModel.enemyCreated = false;
@@ -325,6 +329,8 @@ namespace BLL.Services
             foreach (var i in lootedThings)
                 returnString +=( " " + i+",");
 
+            logModel.enemyName = enemy.Name;
+            logModel.enemyMaxHP = enemy.HPMax;
             logModel.enemyHP = enemy.HP;
             logModel.Looted = true;
             logModel.enemyCreated = false;
@@ -357,6 +363,8 @@ namespace BLL.Services
         {
             Random random = new Random();
 
+            logModel.enemyName = enemy.Name;
+            logModel.enemyMaxHP = enemy.HPMax;
             logModel.enemyHP = enemy.HP;
             logModel.Looted = false;
             logModel.enemyCreated = false;
@@ -399,6 +407,8 @@ namespace BLL.Services
             enemyLooted = false;
             character.isFighting = true;
 
+            logModel.enemyName = enemy.Name;
+            logModel.enemyMaxHP = enemy.HPMax;
             logModel.enemyHP = enemy.HP;
             logModel.Looted = false;
             logModel.enemyCreated = true;
@@ -409,6 +419,8 @@ namespace BLL.Services
 
         public LogModel GoToCity(CreateCharacterModel character)
         {
+            logModel.enemyName = enemy.Name;
+            logModel.enemyMaxHP = enemy.HPMax;
             logModel.enemyHP = enemy.HP;
             logModel.Looted = false;
             logModel.enemyCreated = false;

@@ -10,6 +10,8 @@ namespace BLL.Models
     {
         public string returnModel { get; set; }
         public int enemyHP { get; set; }
+        public int enemyMaxHP { get; set; }
+        public string enemyName { get; set; }
         public bool Looted { get; set; }
         public bool enemyCreated { get; set; }
     }
