@@ -15,16 +15,18 @@ namespace BLL.Interfaces
         int Create(CreateCharacterModel character, CreateCharacterStats stats, CreateCharacterSkills skills, int userId);
         int SetCharacter(CreateCharacterModel character, CreateCharacterSkills skills, CreateCharacterStats stats);
         int Delete(CreateCharacterModel character, int userId);
-        LogModel Pick();
-        LogModel Walk(CreateCharacterModel character);
+        LogModel Pick(CreateCharacterModel character);
+        LogModel Walk(CreateCharacterModel character, ICollection<CharacterItem> charInventory);
         LogModel GoToCity(CreateCharacterModel character);
         bool Explore();
         LogModel Fight(CreateCharacterModel character);
+        LogModel Heal(CreateCharacterModel character, ICollection<CharacterItem> charInventory);
         LogModel Loot(CreateCharacterModel character, ICollection<CharacterItem> charInventory);
         LogModel TryToSpeak(CreateCharacterModel character, CreateCharacterSkills skills, CreateCharacterStats stats);
         bool Pray();
         bool Steal();
         bool Sneak();
+        LogModel LevelUp(CreateCharacterModel character);
         LogModel Die(CreateCharacterModel character);
         LogModel CheckSituation(CreateCharacterModel character, ICollection<CharacterItem> charInventory);
 

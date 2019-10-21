@@ -147,9 +147,9 @@
 
         <TextBlock x:Name="enemyName" Grid.Column="14" Grid.Row="0" Text="Enemy HP" FontSize="16" HorizontalAlignment="Right"  FontWeight="DemiBold" TextAlignment="Center" VerticalAlignment="Center" Width="92" Height="22" Margin="0,-2,50,0"  />
         <Border Grid.Column="14" Grid.Row="1" BorderThickness="1" BorderBrush="Black" Height="35" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.RowSpan="3" Width="200"  >
-            <TextBlock x:Name="enemyHealthPoints" Text="Name" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock x:Name="enemyHealthPoints" Text="" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Border >
-        <ProgressBar x:Name="progressBar" Grid.Row="12" Grid.Column="13" Grid.ColumnSpan="3" Height="Auto" >
+        <ProgressBar x:Name="progressBar" Minimum="0" Maximum="100" Grid.Row="12" Grid.Column="13" Grid.ColumnSpan="3" Height="Auto" >
         </ProgressBar>
     </Grid>
 

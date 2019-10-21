@@ -5,6 +5,7 @@ using DAL.Entities;
 using DAL.Repositories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -88,58 +89,52 @@ namespace ZPG_DnD_
             wisdomNum.Text = stats.Wisdom.ToString();
 
             coins.Text = "Coins: " + character.Coins.ToString();
-            /*_characterItemRepository.Add(new CharacterItem()
-            {
-                ItemId = 1,
-                InventoryId = _characterRepository.Get().FirstOrDefault(
-                u => u.Name == character.Name).Id
 
-            });*/
-            //LVinventory.Items.Add(_inventoryRepository.Get().FirstOrDefault(u => u.Id == characterId).CharacterItems.FirstOrDefault().ItemOf.Name);
             setEquipment();
             setInventory();
 
-            //таймер
             timer = new DispatcherTimer();
             timer.Tick += Timer_Tick;
-            //інтервал
             timer.Interval = new TimeSpan(0, 0, 1);
-
-            // запуск таймера
             timer.Start();
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+
+            worker.RunWorkerAsync();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            //_charInventory = null;
-            //_charInventory = _inventoryRepository.Get().FirstOrDefault(u => u.Id == _characterId).CharacterItems;
-            
-            LogModel situation = _characterService.CheckSituation(_character, _charInventory);
-            //progressBar.Value = 50;
-            Log.Items.Add(situation.returnModel);
-            do {
-                progressBar.Value += 20;
-                progressBar.IsIndeterminate = true;
-                Thread.Sleep(1000);
-            } while (progressBar.Value < progressBar.Maximum);
-            progressBar.Value = 0;
-            //progressBar.
-            //Log.ScrollIntoView(Log.Items[Log.Items.Count - 2]);
-            Log.ScrollIntoView(Log.Items[Log.Items.Count - 1]);
-            Log.SelectedItem = Log.Items[Log.Items.Count - 1];
-            healthPoints.Text = _character.HP.ToString() + "/" + _character.HPMax.ToString();
-            enemyHealthPoints.Text = situation.enemyHP.ToString() + "/" + situation.enemyMaxHP.ToString();
-            enemyName.Text = situation.enemyName+" HP";
-            experiencePt.Text = _character.Exp.ToString();
-            if (situation.Looted)
+            if (progressBar.Value/2 > 40)
             {
-                setEquipment();
-                setInventory();
+                LogModel situation = _characterService.CheckSituation(_character, _charInventory);
+            
+                if(Log.Items.IndexOf("") != 0)
+                    Log.Items.Remove("");
+
+                Log.Items.Add(situation.returnModel);
+
+                Log.Items.Add("");
+                Log.ScrollIntoView("");
+                
+                Log.SelectedIndex = Log.Items.Count - 1;
+                classNlevel.Text = _character.Class.ToString() + " " + _character.Level.ToString();
+                healthPoints.Text = _character.HP.ToString() + "/" + _character.HPMax.ToString();
+                enemyHealthPoints.Text = situation.enemyHP.ToString() + "/" + situation.enemyMaxHP.ToString();
+                enemyName.Text = situation.enemyName + " HP";
+                experiencePt.Text = _character.Exp.ToString();
+                if (situation.Looted)
+                {
+                    setEquipment();
+                    setInventory();
+                }
+                if (situation.returnModel == _character.Name + " Died")
+                    timer.Stop();
+                
             }
-            if (situation.returnModel == _character.Name + " Died")
-                timer.Stop();
-            Log.ScrollIntoView(Log.Items[Log.Items.Count - 1]);
-            Log.ScrollIntoView(Log.Items[Log.Items.Count - 1]);
         }
 
         public void setInventory()
@@ -237,28 +232,22 @@ namespace ZPG_DnD_
             
             _inventoryRepository.Edit(_characterId, new CharacterInventory() { CharacterItems = _charInventory});
         }
-       /* public bool InventoryReset(int id, ICollection<CharacterItem> elem)
+
+
+        void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            try
-            {
-                _context.CharInventories.FirstOrDefault(t => t.Id == id).CharacterItems.Clear();
+            while(true)
+                for (int i = 0; i <= 100; i++)
+                {
+                    (sender as BackgroundWorker).ReportProgress(i);
+                    Thread.Sleep(50);
+                }
+                //progressBar.Value = 0;
+        }
 
-
-
-
-
-
-
-
-                foreach (var item in elem)
-                    _context.CharInventories.FirstOrDefault(t => t.Id == id).CharacterItems.(item);
-                _context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }*/
+        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar.Value = e.ProgressPercentage;
+        }
     }
 }

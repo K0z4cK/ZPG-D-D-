@@ -22,6 +22,7 @@ namespace BLL.Services
         private readonly IZPGRepository<Enemy> _EnemyRepository;
         private readonly IZPGRepository<EnemyInventory> _enemyInventoryRepository;
         private readonly IZPGRepository<EnemyItem> _enemyItemRepository;
+        private readonly IZPGRepository<Item> _ItemRepository;
         private CreateEnemyModel enemy;
         private ICollection<EnemyItem> enemyInventory;
         private ICollection<CharacterItem> _charInventory;
@@ -38,6 +39,7 @@ namespace BLL.Services
             _EnemyRepository = new EnemyRepository(_context);
             _enemyInventoryRepository = new EnemyInventoryRepository(_context);
             _enemyItemRepository = new EnemyItemRepository(_context);
+            _ItemRepository = new ItemRepository(_context);
         }
         public IEnumerable<CreateCharacterModel> GetCharactersByUserId(int userId)
         {
@@ -46,6 +48,13 @@ namespace BLL.Services
                   Select(t => new CreateCharacterModel()
                   {
                       ArmorClass = t.ArmorClass,
+                      Level = t.Level,
+                      Exp = t.Exp,
+                      Coins = t.Coins,
+                      Aligment = t.Aligment,
+                      Background= t.Background,
+                      Class = t.Class,
+                      Race= t.Race,
                       Name = t.Name,
                       HP= t.HP,
                       HPMax=t.HPMax,
@@ -199,8 +208,10 @@ namespace BLL.Services
         public LogModel CheckSituation(CreateCharacterModel character, ICollection<CharacterItem> charInventory)
         {
             _charInventory = charInventory;
+            if (character.Exp >= character.Level * 12.5)
+                return LevelUp(character);
             if (!character.isFighting && character.HP > 1 && enemyLooted)
-                return Walk(character);
+                return Walk(character, charInventory);
             else if (character.isFighting)
                 return Fight(character);
             else if (!character.isFighting && !enemyLooted)
@@ -296,11 +307,14 @@ namespace BLL.Services
             }
             else
             {
-                if (persuasion > sleightOfHand)
+                if (persuasion > sleightOfHand && enemy.HP == enemy.HPMax)
+                {
                     return TryToSpeak(character, skills, stats);
+                }
                 if (charHit > enemyArm)
                 {
                     enemy.HP -= charHit;
+                    logModel.enemyHP = enemy.HP;
                     logModel.returnModel = character.Name+" hit " + enemy.Name + " by " + charHit.ToString();
                 }
                 else logModel.returnModel = character.Name+" just started to attack and his " + charWeapon.Name + " flew out of hand"; 
@@ -339,9 +353,34 @@ namespace BLL.Services
             return logModel;
         }
 
-        public LogModel Pick()
+        public LogModel Pick(CreateCharacterModel character)
         {
-            throw new NotImplementedException();
+            logModel.enemyName = enemy.Name;
+            logModel.enemyMaxHP = enemy.HPMax;
+            logModel.enemyHP = enemy.HP;
+            logModel.Looted = true;
+            logModel.enemyCreated = false;
+            
+
+
+            Item pickedItem = new Item();
+            Random rnd = new Random();
+            int roll = rnd.Next(100);
+            if (roll >= 10 && roll < 35)
+                pickedItem = _ItemRepository.Get().FirstOrDefault(x => x.Id == 17);
+            else if (roll >= 35)
+                pickedItem = _ItemRepository.Get().FirstOrDefault(x => x.Id == 1);
+            else roll = rnd.Next(_ItemRepository.Get().Last().Id + 1);
+
+            _characterItemRepository.Add(new CharacterItem()
+            {
+                ItemId = pickedItem.Id,
+                InventoryId = _characterId
+            });
+
+            logModel.returnModel = character.Name + " found " + pickedItem.Name + " on the way";
+
+            return logModel;
         }
 
         public bool Pray()
@@ -369,8 +408,8 @@ namespace BLL.Services
             logModel.Looted = false;
             logModel.enemyCreated = false;
             logModel.returnModel = character.Name + " trying to speak with " + enemy.Name + "\n";
-            int charSpeak = random.Next((stats.Charisma / skills.Persuasion) + (skills.Persuasion + stats.Charisma) * 5);
-            int needToSpeak = (stats.Charisma / skills.Persuasion) + (skills.Persuasion + stats.Charisma) * 4;
+            int charSpeak = random.Next(((stats.Charisma + 2) / (skills.Persuasion + 1)) + (skills.Persuasion + stats.Charisma) * 5);
+            int needToSpeak = ((stats.Charisma + 2) / (skills.Persuasion + 1)) + (skills.Persuasion + stats.Charisma) * 4;
             if (charSpeak >= needToSpeak)
             {
                 character.isFighting = false;
@@ -383,37 +422,47 @@ namespace BLL.Services
             return logModel;
         }
 
-        public LogModel Walk(CreateCharacterModel character)
+        public LogModel Walk(CreateCharacterModel character, ICollection<CharacterItem> charInventory)
         {
             Random random = new Random();
-            int enemyId = random.Next((_EnemyRepository.Get().Last().Id)+1);
-            if (enemyId == 2)
-                enemyId--;
-            if (enemyId == 0)
-                enemyId++;
-            var EnemyTemp = _EnemyRepository.Get().FirstOrDefault(u => u.Id == enemyId);
-            enemyInventory = _enemyInventoryRepository.Get().FirstOrDefault(u => u.Id == enemyId).EnemyItems;
-            enemy = new CreateEnemyModel()
+            int roll = random.Next(100);
+
+            if (character.HP <= character.HPMax / 2)
+                if (charInventory.FirstOrDefault(x => x.Id == 17) != default)
+                    return Heal(character, charInventory);
+
+            if (roll < 20 && enemy != null) 
+                return Pick(character);
+            else
             {
-                ArmorClass = EnemyTemp.ArmorClass,
-                ExpGained = EnemyTemp.ExpGained,
-                HP = EnemyTemp.HP,
-                HPMax = EnemyTemp.HPMax,
-                Intitiative = EnemyTemp.Intitiative,
-                Name = EnemyTemp.Name,
-                IsBoss = EnemyTemp.IsBoss,
-                Speed = EnemyTemp.Speed
-            };
-            enemyLooted = false;
-            character.isFighting = true;
+                int enemyId = random.Next(_EnemyRepository.Get().Last().Id + 1);
+                if (enemyId == 2)
+                    enemyId--;
+                if (enemyId == 0)
+                    enemyId++;
+                var EnemyTemp = _EnemyRepository.Get().FirstOrDefault(u => u.Id == enemyId);
+                enemyInventory = _enemyInventoryRepository.Get().FirstOrDefault(u => u.Id == enemyId).EnemyItems;
+                enemy = new CreateEnemyModel()
+                {
+                    ArmorClass = EnemyTemp.ArmorClass,
+                    ExpGained = EnemyTemp.ExpGained,
+                    HP = EnemyTemp.HP,
+                    HPMax = EnemyTemp.HPMax,
+                    Intitiative = EnemyTemp.Intitiative,
+                    Name = EnemyTemp.Name,
+                    IsBoss = EnemyTemp.IsBoss,
+                    Speed = EnemyTemp.Speed
+                };
+                enemyLooted = false;
+                character.isFighting = true;
 
-            logModel.enemyName = enemy.Name;
-            logModel.enemyMaxHP = enemy.HPMax;
-            logModel.enemyHP = enemy.HP;
-            logModel.Looted = false;
-            logModel.enemyCreated = true;
-            logModel.returnModel = character.Name + " meet " + enemy.Name + " and he look realy agressive";
-
+                logModel.enemyName = enemy.Name;
+                logModel.enemyMaxHP = enemy.HPMax;
+                logModel.enemyHP = enemy.HP;
+                logModel.Looted = false;
+                logModel.enemyCreated = true;
+                logModel.returnModel = character.Name + " meet " + enemy.Name + " and he look realy agressive";
+            }
             return logModel;
         }
 
@@ -428,6 +477,35 @@ namespace BLL.Services
             return logModel;
         }
 
-        
+        public LogModel LevelUp(CreateCharacterModel character)
+        {
+            logModel.enemyName = enemy.Name;
+            logModel.enemyMaxHP = enemy.HPMax;
+            logModel.enemyHP = enemy.HP;
+            logModel.Looted = false;
+            logModel.enemyCreated = false;
+            character.Level++;
+            if (character.Level % 5 == 1)
+                character.HPMax += character.Exp / 5;
+            logModel.returnModel = character.Name + " has level up to "+character.Level;
+            return logModel;
+            
+        }
+
+        public LogModel Heal(CreateCharacterModel character, ICollection<CharacterItem> charInventory)
+        {
+            logModel.enemyName = enemy.Name;
+            logModel.enemyMaxHP = enemy.HPMax;
+            logModel.enemyHP = enemy.HP;
+            logModel.Looted = true;
+            logModel.enemyCreated = false;
+                charInventory.Remove(charInventory.FirstOrDefault(x => x.Id == 17));
+                _characterItemRepository.Delete(17);
+                character.HP += 50;
+                if (character.HP > character.HPMax)
+                    character.HP = character.HPMax;
+                logModel.returnModel = character.Name + " Use Healing Potion";
+                return logModel;
+        }
     }
 }
